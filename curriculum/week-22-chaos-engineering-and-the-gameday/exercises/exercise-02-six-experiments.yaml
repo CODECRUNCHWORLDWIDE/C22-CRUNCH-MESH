@@ -1,0 +1,201 @@
+# Exercise 2 — The Six Canonical Experiments (runnable Chaos Mesh CRDs)
+#
+# Goal: A COMPLETE, applyable library of the six experiments that make up your
+#       gameday. Each is scoped with a selector (which targets), a mode (how many),
+#       and a duration (how long) so the blast radius is bounded. This is the
+#       syllabus lab: "Author six experiments: pod kill, network partition, packet
+#       loss, CPU stress, disk fill, broker loss."
+#
+# Estimated time: 60 minutes. Runnable.
+#
+# ============================================================================
+# !!! HOW TO USE THIS FILE — READ THIS FIRST !!!
+# ============================================================================
+#   DO NOT `kubectl apply -f` this whole file. Each experiment is separated by a
+#   `---` and a header. Run them ONE AT A TIME, in your gameday runbook order:
+#
+#     1. Write the hypothesis + steady-state metric + abort condition.
+#     2. Confirm steady state (load is flowing, the SLI is in band).
+#     3. Apply ONE experiment:    kubectl apply -f <(yq 'select(.metadata.name=="cart-pod-kill")' exercise-02-six-experiments.yaml)
+#        (or copy the single block into its own file and apply that.)
+#     4. Watch the steady-state metric for the experiment's duration.
+#     5. ALWAYS clean up:         kubectl delete podchaos/networkchaos/... <name> -n <ns>
+#     6. Confirm recovery to baseline BEFORE the next experiment.
+#
+#   Overlapping uncontrolled faults make the verdict unreadable. One at a time.
+#
+# PREREQUISITES
+#   - Chaos Mesh installed (Exercise 1).
+#   - Your capstone services (cart, inventory, order) in namespace `shop`, labeled
+#     with app=<name> and region=west|east. Kafka in namespace `kafka`.
+#   - A steady-state metric per experiment, live in Grafana.
+#   - Substitutions: if a service isn't ready, point the selector at any
+#     replicated stand-in with the same label.
+#
+# ============================================================================
+# EXPERIMENT 1 — PodChaos: a cart pod vanishes
+#   Hypothesis: error < 1%, p99 < 200ms (Service routes to survivors).
+#   SLI: cart RED error ratio.   Abort: error > 5% for 60s.
+# ============================================================================
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata: { name: cart-pod-kill, namespace: shop }
+spec:
+  action: pod-kill
+  mode: one                          # exactly one pod
+  selector:
+    namespaces: [shop]
+    labelSelectors: { app: cart }
+  duration: "60s"
+# ============================================================================
+# EXPERIMENT 2 — NetworkChaos: partition west region from east (active-active test)
+#   Hypothesis: both regions serve cart locally during the partition; the cart
+#               CRDT converges with NO lost items after heal.
+#   SLI: per-region cart availability + a post-heal convergence audit.
+#   Abort: either region < 95% available for 60s.   THIS IS CAPSTONE DRILL A's shape.
+# ============================================================================
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata: { name: region-partition, namespace: shop }
+spec:
+  action: partition
+  mode: all
+  selector:
+    namespaces: [shop]
+    labelSelectors: { region: west }
+  direction: both
+  target:
+    mode: all
+    selector:
+      namespaces: [shop]
+      labelSelectors: { region: east }
+  duration: "5m"
+# ============================================================================
+# EXPERIMENT 3 — NetworkChaos: packet loss + delay on cart -> inventory
+#   Hypothesis: user-visible p99 absorbs a slow/lossy inventory call because cart's
+#               retry budget + timeout shed it; the order path stays under SLO.
+#   SLI: order-path p99.   Abort: p99 > 1s for 60s.
+#   NOTE: this combines loss AND delay to test the retry/timeout interaction.
+# ============================================================================
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: NetworkChaos
+metadata: { name: inventory-degrade, namespace: shop }
+spec:
+  action: delay                      # delay; switch action to `loss` for the pure packet-loss variant
+  mode: all
+  selector:
+    namespaces: [shop]
+    labelSelectors: { app: inventory }
+  direction: to
+  delay:
+    latency: "200ms"
+    jitter: "50ms"
+    correlation: "50"
+  loss:                              # 5% packet loss on top of the delay
+    loss: "5"
+    correlation: "25"
+  duration: "120s"
+# ============================================================================
+# EXPERIMENT 4 — StressChaos: CPU pressure on an order pod
+#   Hypothesis: HPA/KEDA scales out and p99 recovers, OR load-shedding bounds errors.
+#   SLI: order RED + replica count.   Abort: error > 5% for 90s.
+# ============================================================================
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: StressChaos
+metadata: { name: order-cpu-stress, namespace: shop }
+spec:
+  mode: one
+  selector:
+    namespaces: [shop]
+    labelSelectors: { app: order }
+  stressors:
+    cpu:
+      workers: 4
+      load: 90                       # ~90% CPU on 4 workers
+  duration: "120s"
+# ============================================================================
+# EXPERIMENT 5 — IOChaos: filesystem latency on a Kafka broker (the "disk goes slow")
+#   Hypothesis: Kafka under 100ms I/O latency keeps producing/consuming with
+#               BOUNDED lag (page cache + batching absorb it); no loss.
+#   SLI: consumer-group lag.   Abort: lag > 60s.
+#   For DISK-FILL (ENOSPC) instead, switch action to `fault` with errno=28, OR run a
+#   sidecar that `dd`s a large file onto the volume until it fills.
+# ============================================================================
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: IOChaos
+metadata: { name: kafka-io-latency, namespace: kafka }
+spec:
+  action: latency                    # action: fault + errno: 28 gives ENOSPC (disk full)
+  mode: one
+  selector:
+    namespaces: [kafka]
+    labelSelectors: { app: kafka }
+  volumePath: /var/lib/kafka
+  path: "/var/lib/kafka/**/*"
+  delay: "100ms"
+  percent: 50                        # half of I/O ops delayed 100ms
+  duration: "120s"
+# ============================================================================
+# EXPERIMENT 6 — PodChaos: Kafka broker loss (the EXACTLY-ONCE drill / capstone Drill B)
+#   Hypothesis: killing one of three brokers causes a brief stall while leadership
+#               re-elects, but (a) NO messages lost (acks=all + min.insync.replicas=2)
+#               and (b) the consumer does NOT double-process (outbox + idempotency keys).
+#   SLI: consumer lag + an IDEMPOTENCY-KEY AUDIT (see exercise-03).
+#   Abort: data loss detected.   THE VERDICT IS THE AUDIT, NOT "it recovered."
+# ============================================================================
+---
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata: { name: kafka-broker-loss, namespace: kafka }
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    namespaces: [kafka]
+    labelSelectors:
+      app: kafka
+      strimzi.io/broker-role: "broker"
+  duration: "90s"
+#
+# -----------------------------------------------------------------------------
+# Expected results (per experiment)
+# -----------------------------------------------------------------------------
+#
+#   E1 pod-kill: a few in-flight requests fail; error ratio blips then returns under
+#      the SLO. If it STAYS high -> missing readiness gate / not actually replicated.
+#
+#   E2 partition: both regions keep serving (active-active). After `kubectl delete`,
+#      run the convergence audit (Week 20): the cart OR-set must converge with zero
+#      lost adds. If items vanished, your merge is lossy -> a finding.
+#
+#   E3 degrade: order p99 rises. If retries + timeout are tuned right, user-visible
+#      error rate stays low. If p99 blows the SLO, the retry/timeout budget is wrong
+#      (see Lecture 2 §3.3's worked postmortem).
+#
+#   E4 CPU stress: replica count should climb (HPA) and p99 recover. If it never
+#      scales, the HPA target metric is wrong -> a finding.
+#
+#   E5 I/O latency: consumer lag rises then drains within the duration. If it grows
+#      unbounded, the broker can't keep up under slow disk -> a finding.
+#
+#   E6 broker loss: ISR shrinks (e.g. 0,1,2 -> 1,2), a leader re-elects, lag spikes
+#      and drains. THEN run exercise-03's audit. The verdict is "side-effect count ==
+#      business-event count AND delivered > processed" (redelivery happened AND was
+#      absorbed). NOT "the dashboard went green."
+#
+# ACCEPTANCE CRITERIA
+#   [ ] You ran the six experiments ONE AT A TIME, each with a written hypothesis,
+#       steady-state metric, and abort condition decided BEFORE injecting.
+#   [ ] Each experiment was scoped (selector/mode) and time-boxed (duration).
+#   [ ] You recorded a verdict (HELD/REFUTED) per experiment from the metric, with a
+#       timeline of inject -> peak -> recover.
+#   [ ] You DELETED every chaos CRD and confirmed `kubectl get podchaos,networkchaos,
+#       stresschaos,iochaos -A` is empty afterward.
+#   [ ] At least ONE experiment refuted its hypothesis (a finding) — or you argue
+#       credibly why all six held with metrics sharp enough to have caught a failure.
+# -----------------------------------------------------------------------------

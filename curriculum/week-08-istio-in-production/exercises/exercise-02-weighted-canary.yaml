@@ -1,0 +1,167 @@
+# Exercise 2 — The Weighted Canary (runnable Istio config)
+#
+# Goal: A COMPLETE, applyable set of Istio CRDs that performs a weighted canary of
+#       the `cart` service from v1 to v2, with a DestinationRule defining the
+#       subsets + traffic policy and a VirtualService driving the weights. Includes
+#       a fault-injection variant to test that callers (the BFF, the cart->inventory
+#       path) survive a slow/failing dependency.
+#
+#       This is the syllabus lab: "Roll out a v2 of cart with 10/90 weighted
+#       traffic, then 50/50, then 100/0. Inject a 200 ms latency fault and observe
+#       in Kiali."
+#
+# Estimated time: 60 minutes. Runnable.
+#
+# PREREQUISITES
+#   - Istio installed, the `shop` namespace meshed and STRICT (Exercise 1).
+#   - Two versions of cart deployed, labeled version=v1 and version=v2:
+#       kubectl apply -n shop -f cart-v1.yaml   # pods labeled version: v1
+#       kubectl apply -n shop -f cart-v2.yaml   # pods labeled version: v2
+#     (If you have only one cart, deploy a second Deployment of the same image
+#      with the label version=v2 so the canary has somewhere to send traffic.)
+#   - A load generator. Istio bundles fortio:
+#       kubectl apply -n shop -f samples/httpbin/sample-client/fortio-deploy.yaml
+#
+# HOW TO USE THIS FILE
+#   1. Apply the DestinationRule + the 10/90 VirtualService:
+#        kubectl apply -f exercise-02-weighted-canary.yaml
+#   2. Confirm the weights landed on the ACTUAL proxy (not just the CRD):
+#        istioctl proxy-config routes deploy/cart -n shop -o json \
+#          | jq '.[].virtualHosts[].routes[].route.weightedClusters'
+#   3. Drive traffic and watch the split (v2 should get ~10%):
+#        kubectl exec -n shop deploy/fortio -- fortio load -c 4 -qps 50 -t 30s \
+#          http://cart.shop.svc.cluster.local:50051/
+#   4. Shift the weights: edit the VirtualService to 50/50, re-apply, observe;
+#      then 100/0, re-apply, observe. Each shift is a config push — no restarts.
+#   5. Apply the FAULT-INJECTION VirtualService (bottom of this file) and confirm
+#      callers degrade/recover instead of cascading. Watch the error edge in Kiali:
+#        istioctl dashboard kiali
+#
+# ============================================================================
+# Part A — the canary: DestinationRule (subsets) + VirtualService (weights)
+# ============================================================================
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: cart
+  namespace: shop
+spec:
+  host: cart.shop.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_REQUEST
+    connectionPool:
+      tcp:
+        maxConnections: 512
+      http:
+        http2MaxRequests: 512          # gRPC multiplexes on HTTP/2 — this is the real cap
+        maxRequestsPerConnection: 0    # 0 = unlimited; set >0 to force periodic reconnects
+    # The SAME passive health checking you wrote by hand in Envoy last week,
+    # now declared. A v2 pod that throws consecutive 5xx is ejected.
+    outlierDetection:
+      consecutive5xxErrors: 5
+      interval: 10s
+      baseEjectionTime: 30s
+      maxEjectionPercent: 50           # never eject more than half the subset
+  subsets:
+  - name: v1
+    labels:
+      version: v1                       # selects pods labeled version=v1
+  - name: v2
+    labels:
+      version: v2
+---
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: cart
+  namespace: shop
+spec:
+  hosts:
+  - cart.shop.svc.cluster.local
+  http:
+  - name: cart-canary
+    route:
+    - destination:
+        host: cart.shop.svc.cluster.local
+        subset: v1
+      weight: 90                        # STAGE 1: 90% to the stable v1
+    - destination:
+        host: cart.shop.svc.cluster.local
+        subset: v2
+      weight: 10                        # STAGE 1: 10% canary to v2
+    # Mesh-level retries on the route (the Envoy retry_policy from Week 7, declared).
+    retries:
+      attempts: 2
+      perTryTimeout: 800ms
+      retryOn: "connect-failure,refused-stream,unavailable"   # gRPC-aware
+    timeout: 2s                          # overall request budget, including retries
+#
+# STAGE 2 (50/50): change the two weights to 50 and 50, re-apply.
+# STAGE 3 (100/0): change to v1=0, v2=100, re-apply. v1 is now idle; scale it down.
+# ROLLBACK at any stage: set v2 weight to 0, re-apply. Instant — no redeploy.
+
+# ============================================================================
+# Part B — fault injection: test that callers survive a slow/failing inventory
+# ============================================================================
+# Apply this SEPARATELY (it targets inventory, not cart) to inject latency and
+# aborts, then watch whether cart's retries + the BFF's degradation hold up.
+# DELETE IT when you're done — leaving fault injection in a live namespace is a
+# self-inflicted outage.
+#
+#   kubectl apply -f - <<'EOF'
+#   apiVersion: networking.istio.io/v1
+#   kind: VirtualService
+#   metadata:
+#     name: inventory-fault
+#     namespace: shop
+#   spec:
+#     hosts:
+#     - inventory.shop.svc.cluster.local
+#     http:
+#     - fault:
+#         delay:
+#           percentage: { value: 50 }
+#           fixedDelay: 200ms          # half of inventory calls are delayed 200ms
+#         abort:
+#           percentage: { value: 10 }
+#           httpStatus: 503            # 10% are aborted (gRPC sees UNAVAILABLE)
+#       route:
+#       - destination:
+#           host: inventory.shop.svc.cluster.local
+#   EOF
+#
+#   # observe, then ALWAYS clean up:
+#   kubectl delete virtualservice inventory-fault -n shop
+
+# -----------------------------------------------------------------------------
+# Expected results
+# -----------------------------------------------------------------------------
+#
+#   # After Stage 1, the proxy route shows the weights:
+#   $ istioctl proxy-config routes deploy/cart -n shop -o json \
+#       | jq '.[].virtualHosts[].routes[].route.weightedClusters.clusters'
+#   [
+#     { "name": "outbound|50051|v1|cart.shop.svc.cluster.local", "weight": 90 },
+#     { "name": "outbound|50051|v2|cart.shop.svc.cluster.local", "weight": 10 }
+#   ]
+#
+#   # fortio shows ~10% of responses served by v2 (check a version header or the
+#   # per-subset istio_requests_total metric). Shift to 50/50 -> ~half. 100/0 -> all v2.
+#
+#   # Under fault injection, the cart->inventory edge in Kiali shows ~10% errors and
+#   # raised latency; if your retries + BFF degradation are right, the USER-visible
+#   # error rate is far lower than 10% (retries recover the transient aborts; the BFF
+#   # degrades gracefully on the rest). THAT gap is your resilience working.
+#
+# ACCEPTANCE CRITERIA
+#   [ ] istioctl proxy-config routes shows the configured weights on the ACTUAL
+#       proxy at each stage (10/90, 50/50, 100/0) — proving the CRD became Envoy config.
+#   [ ] fortio traffic splits across v1/v2 in roughly the configured ratio.
+#   [ ] Setting v2 weight to 0 instantly stops traffic to v2 with no pod restart
+#       (instant rollback).
+#   [ ] Under fault injection, you can SEE the targeted error edge in Kiali, and the
+#       user-visible error rate is lower than the injected rate (retries + degradation).
+#   [ ] You DELETED the fault-injection VirtualService when done.
+# -----------------------------------------------------------------------------

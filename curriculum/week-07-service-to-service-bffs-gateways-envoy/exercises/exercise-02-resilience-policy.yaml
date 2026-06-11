@@ -1,0 +1,177 @@
+# Exercise 2 — The Resilience Policy (runnable Envoy config)
+#
+# Goal: A COMPLETE, runnable Envoy config that puts all four resilience primitives
+#       in front of the `cart` cluster:
+#         - per-route timeout (2s overall, including retries)
+#         - retries bounded by a RETRY BUDGET (so a retry storm cannot form)
+#         - outlier detection (eject a pod that returns consecutive 5xx)
+#         - a circuit breaker (fail fast instead of piling on a struggling backend)
+#
+# Estimated time: 60 minutes. Runnable.
+#
+# HOW TO USE THIS FILE
+#
+#   1. Start TWO cart backends so outlier detection and load balancing have
+#      something to work with. The simplest pair: a HEALTHY one and a FLAKY one
+#      that returns 5xx some of the time. A 20-line Go or Python HTTP/2 server
+#      works; or reuse your Phase 1 cart with a fault-injection flag. Point the
+#      two endpoints below at them (default 127.0.0.1:50051 and :50052).
+#
+#   2. Run Envoy:
+#        func-e run -c exercise-02-resilience-policy.yaml
+#
+#   3. Drive load and watch the policies fire:
+#        fortio load -qps 200 -t 30s -grpc localhost:10000 cart.v1.CartService/GetCart
+#      (or `ghz --insecure --proto cart.proto --call cart.v1.CartService.GetCart \
+#            -z 30s -q 200 localhost:10000`)
+#
+#   4. Read the stats and CONFIRM each policy did its job (see the acceptance
+#      block at the bottom):
+#        curl -s localhost:9901/stats | grep -E \
+#          "cart.upstream_rq_(retry|timeout)|cart.outlier|cart.circuit_breakers"
+#
+# WHAT TO LOOK FOR
+#   - upstream_rq_retry climbs (retries are happening) BUT
+#     upstream_rq_retry_limit_exceeded ALSO climbs under stress — that is the
+#     BUDGET refusing retries, which is the storm-prevention working.
+#   - outlier_detection.ejections_active goes to 1 when the flaky backend trips
+#     the consecutive-5xx threshold; traffic shifts to the healthy one.
+#   - circuit_breakers.default.rq_open flips to 1 if you push concurrency past
+#     the max_requests / max_pending_requests caps.
+
+admin:
+  address:
+    socket_address: { address: 0.0.0.0, port_value: 9901 }
+
+static_resources:
+  listeners:
+  - name: ingress
+    address:
+      socket_address: { address: 0.0.0.0, port_value: 10000 }
+    filter_chains:
+    - filters:
+      - name: envoy.filters.network.http_connection_manager
+        typed_config:
+          "@type": type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
+          stat_prefix: ingress
+          codec_type: AUTO
+          route_config:
+            name: edge
+            virtual_hosts:
+            - name: backend
+              domains: ["*"]
+              routes:
+              - match: { prefix: "/cart.v1." }
+                route:
+                  cluster: cart
+                  # Overall budget for the request INCLUDING all retries.
+                  timeout: 2s
+                  retry_policy:
+                    # gRPC-aware retry conditions. 'unavailable' maps to gRPC UNAVAILABLE;
+                    # 'reset'/'connect-failure' cover transport-level failures.
+                    retry_on: "5xx,reset,connect-failure,unavailable"
+                    num_retries: 2
+                    # Back off between retries so retries don't synchronize into a herd.
+                    retry_back_off:
+                      base_interval: 0.025s
+                      max_interval: 0.250s
+                    # Don't retry onto a host we already tried and failed.
+                    retry_host_predicate:
+                    - name: envoy.retry_host_predicates.previous_hosts
+                      typed_config:
+                        "@type": type.googleapis.com/envoy.extensions.retry.host.previous_hosts.v3.PreviousHostsPredicate
+                    host_selection_retry_max_attempts: 3
+                    # Per-try timeout: each individual attempt may take at most 800ms.
+                    per_try_timeout: 0.8s
+          http_filters:
+          - name: envoy.filters.http.router
+            typed_config:
+              "@type": type.googleapis.com/envoy.extensions.filters.http.router.v3.Router
+
+  clusters:
+  - name: cart
+    type: STRICT_DNS
+    connect_timeout: 1s
+    lb_policy: ROUND_ROBIN
+    # gRPC needs HTTP/2 upstream.
+    typed_extension_protocol_options:
+      envoy.extensions.upstreams.http.v3.HttpProtocolOptions:
+        "@type": type.googleapis.com/envoy.extensions.upstreams.http.v3.HttpProtocolOptions
+        explicit_http_config:
+          http2_protocol_options: {}
+
+    # --- CIRCUIT BREAKERS: fail fast instead of piling on -----------------------
+    circuit_breakers:
+      thresholds:
+      - priority: DEFAULT
+        max_connections: 512
+        max_pending_requests: 64     # requests waiting for a connection; overflow -> 503 fast
+        max_requests: 512            # concurrent requests (HTTP/2 multiplexes — this is the real cap)
+        max_retries: 3               # concurrent retries across the whole cluster
+        # --- RETRY BUDGET: retries may never exceed 20% of active requests --------
+        # This is the single most important line in the file. Without it,
+        # num_retries:2 means up to 3x traffic to a struggling backend. With it,
+        # retries are capped at 20% of active load no matter how many requests fail.
+        retry_budget:
+          budget_percent:
+            value: 20.0
+          min_retry_concurrency: 3   # but always allow at least 3 concurrent retries
+
+    # --- OUTLIER DETECTION: passively eject a bad host --------------------------
+    outlier_detection:
+      consecutive_5xx: 5             # 5 consecutive 5xx from a host -> eject it
+      consecutive_gateway_failure: 5 # connection failures / resets -> eject
+      interval: 5s                   # ejection sweep cadence
+      base_ejection_time: 30s        # eject for 30s (grows on repeated ejection)
+      max_ejection_percent: 50       # NEVER eject more than half the cluster — safety valve
+      enforcing_consecutive_5xx: 100 # enforce 100% of the time (not a probabilistic sample)
+
+    load_assignment:
+      cluster_name: cart
+      endpoints:
+      - lb_endpoints:
+        # Endpoint A — your HEALTHY cart backend.
+        - endpoint:
+            address:
+              socket_address: { address: 127.0.0.1, port_value: 50051 }
+        # Endpoint B — your FLAKY cart backend (returns 5xx some of the time).
+        # When it trips consecutive_5xx, outlier detection ejects it and traffic
+        # concentrates on endpoint A. Bring it back and it rejoins after the
+        # base_ejection_time elapses.
+        - endpoint:
+            address:
+              socket_address: { address: 127.0.0.1, port_value: 50052 }
+
+# -----------------------------------------------------------------------------
+# Expected stats after `fortio load`/`ghz` against a healthy + flaky pair
+# -----------------------------------------------------------------------------
+#
+#   cluster.cart.upstream_rq_total: 6000
+#   cluster.cart.upstream_rq_2xx: 5900
+#   cluster.cart.upstream_rq_5xx: 100
+#   cluster.cart.upstream_rq_retry: 95          # retries attempted on the 5xx
+#   cluster.cart.upstream_rq_retry_success: 90  # most retries succeeded (hit the healthy host)
+#   cluster.cart.upstream_rq_retry_limit_exceeded: 4   # the BUDGET refused some — storm prevented
+#   cluster.cart.upstream_rq_timeout: 0
+#   cluster.cart.outlier_detection.ejections_active: 1 # the flaky host is ejected
+#   cluster.cart.outlier_detection.ejections_enforced_total: 1
+#   cluster.cart.circuit_breakers.default.rq_open: 0   # 1 only if you push concurrency past caps
+#
+# THE LESSON: the proxy turned a 1.7% backend error rate into a ~0.2% client
+# error rate (retries recovered most), WITHOUT amplifying load — the budget
+# capped retries at 20%, and outlier detection stopped sending traffic to the
+# bad host entirely. That is resilience you configured, not code you wrote.
+#
+# ACCEPTANCE CRITERIA
+#   [ ] upstream_rq_retry is non-zero (retries fired on the flaky host's 5xx).
+#   [ ] upstream_rq_retry_limit_exceeded is non-zero under sustained error load
+#       (the budget refused retries it would otherwise have made — storm prevented).
+#   [ ] outlier_detection.ejections_active reaches 1 when the flaky host trips
+#       consecutive_5xx; client-visible error rate drops once it's ejected.
+#   [ ] You can force circuit_breakers.default.rq_open to 1 by pushing concurrency
+#       past max_requests/max_pending_requests (e.g. fortio -c 1024) and explain
+#       why failing fast there protects the backend.
+#   [ ] You can state what each primitive does NOT protect you from (timeout:
+#       not correctness; CB: per-Envoy concurrency only; outlier: passive, some
+#       requests fail first; retry: only safe on idempotent ops + with a budget).
+# -----------------------------------------------------------------------------

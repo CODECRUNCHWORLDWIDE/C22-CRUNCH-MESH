@@ -1,0 +1,154 @@
+# Exercise 3 — KEDA Autoscaling on Kafka Lag (runnable)
+#
+# Goal: A COMPLETE, applyable KEDA ScaledObject that autoscales the order.placed.v1
+#       CONSUMER on Kafka PARTITION LAG — the right signal for an event-driven
+#       workload — plus the HPA-on-CPU comparison so you can SEE why lag beats CPU
+#       here. This is the syllabus lab: "Add KEDA autoscaling on Kafka consumer lag."
+#
+# Estimated time: 60 minutes. Runnable.
+#
+# THE IDEA (Lecture 2 §2.2): a consumer can be 100% behind (lag exploding) while its
+# CPU is LOW (I/O-waiting on a slow downstream, or just under-replicated). CPU-based
+# HPA would NOT scale it up, and the backlog would grow until Kafka retention drops
+# messages. Lag-based scaling responds to the thing that actually matters — the backlog.
+#
+# PREREQUISITES
+#   - KEDA installed:
+#       helm repo add kedacore https://kedacore.github.io/charts
+#       helm install keda kedacore/keda -n keda --create-namespace
+#   - Kafka/Redpanda reachable at kafka.shop:9092 with topic order.placed.v1 and a
+#     consumer Deployment `order-consumer` using consumer group `order-consumers`
+#     (from Week 10).
+#   - A way to create a BURST of lag: a producer that floods order.placed.v1 faster
+#     than one consumer replica can drain (e.g. kafka-producer-perf-test, or your
+#     Week 10 producer in a loop).
+#
+# HOW TO USE THIS FILE
+#   1. Apply it:  kubectl apply -f exercise-03-keda-autoscale-on-lag.yaml
+#   2. KEDA creates an HPA under the hood from the ScaledObject; watch it:
+#        kubectl get scaledobject,hpa -n shop
+#   3. Create a BURST of lag (flood the topic). Watch lag rise and replicas scale up:
+#        kubectl get hpa -n shop -w
+#        # in another terminal, watch consumer-group lag:
+#        kafka-consumer-groups --bootstrap-server kafka.shop:9092 \
+#          --describe --group order-consumers
+#   4. Stop the flood. Watch lag drain and replicas scale back down (to minReplicaCount).
+#   5. Compare with Part B (the CPU HPA): flood the topic and observe the CPU HPA does
+#      NOT scale up (consumer CPU stays low while lag explodes) — the whole point.
+#
+# ============================================================================
+# Part A — KEDA ScaledObject: scale the consumer on Kafka LAG (the right way)
+# ============================================================================
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: order-consumer-lag
+  namespace: shop
+spec:
+  scaleTargetRef:
+    name: order-consumer              # the Deployment to scale (your Week 10 consumer)
+  minReplicaCount: 1                   # keep 1 warm (set 0 to scale-to-zero a batch consumer)
+  maxReplicaCount: 50                  # cap; do not scale past where the downstream saturates
+  pollingInterval: 15                  # how often KEDA checks the lag (seconds)
+  cooldownPeriod: 120                  # wait 120s of being idle before scaling down (anti-flap)
+  advanced:
+    horizontalPodAutoscalerConfig:
+      behavior:                        # stabilization windows tame flapping (Lecture 2 §2.3)
+        scaleDown:
+          stabilizationWindowSeconds: 120
+        scaleUp:
+          stabilizationWindowSeconds: 0    # scale UP fast (the spike won't wait)
+  triggers:
+    - type: kafka
+      metadata:
+        bootstrapServers: kafka.shop:9092
+        consumerGroup: order-consumers
+        topic: order.placed.v1
+        # Target ~100 messages of lag PER REPLICA. KEDA computes desired replicas as
+        # ceil(totalLag / lagThreshold), bounded by min/max. 5000 lag -> ceil(5000/100)=50.
+        lagThreshold: "100"
+        # Only scale to zero if the WHOLE group is idle (avoids scaling to zero while
+        # a slow partition still has work):
+        activationLagThreshold: "10"
+        offsetResetPolicy: latest
+
+# ============================================================================
+# Part B — the CONTRAST: an HPA on CPU (the WRONG signal for this workload)
+# ============================================================================
+# Apply this INSTEAD (delete the ScaledObject first) to demonstrate the failure:
+# flood the topic and watch this HPA NOT scale up, because the consumer's CPU stays
+# low while its lag explodes. This is the "why lag, not CPU" proof.
+#
+#   apiVersion: autoscaling/v2
+#   kind: HorizontalPodAutoscaler
+#   metadata: { name: order-consumer-cpu, namespace: shop }
+#   spec:
+#     scaleTargetRef: { apiVersion: apps/v1, kind: Deployment, name: order-consumer }
+#     minReplicas: 1
+#     maxReplicas: 50
+#     metrics:
+#       - type: Resource
+#         resource:
+#           name: cpu
+#           target: { type: Utilization, averageUtilization: 70 }
+#   # Result under a lag burst: CPU stays ~20%, HPA holds at 1 replica, lag grows
+#   # unbounded until retention drops messages. CPU never knew you were falling behind.
+
+# ============================================================================
+# Part C — a reference for the order-consumer Deployment (if you don't have one)
+# ============================================================================
+# A minimal consumer Deployment KEDA can scale. Replace the image/command with your
+# Week 10 consumer. The key is the consumer group matching the ScaledObject trigger.
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-consumer
+  namespace: shop
+spec:
+  replicas: 1                          # KEDA will manage this; the initial value is fine
+  selector: { matchLabels: { app: order-consumer } }
+  template:
+    metadata: { labels: { app: order-consumer } }
+    spec:
+      containers:
+        - name: consumer
+          image: your-registry/order-consumer:latest   # <-- your Week 10 consumer image
+          env:
+            - { name: KAFKA_BOOTSTRAP, value: "kafka.shop:9092" }
+            - { name: KAFKA_TOPIC, value: "order.placed.v1" }
+            - { name: KAFKA_GROUP, value: "order-consumers" }
+          resources:
+            requests: { cpu: "100m", memory: "128Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+
+# -----------------------------------------------------------------------------
+# Expected results
+# -----------------------------------------------------------------------------
+#
+#   # KEDA created an HPA from the ScaledObject:
+#   $ kubectl get scaledobject,hpa -n shop
+#   NAME                          ... READY   ACTIVE
+#   scaledobject/order-consumer-lag    True    True
+#   NAME                                          TARGETS         MINPODS MAXPODS REPLICAS
+#   horizontalpodautoscaler/keda-hpa-order-...    50/100 (avg)    1       50      1
+#
+#   # Under a lag burst (flood the topic), lag rises and replicas scale UP:
+#   $ kubectl get hpa -n shop -w
+#   keda-hpa-order-...   3200/100   1   50   1   -> 32   # ceil(3200/100)=32 replicas requested
+#
+#   # Lag drains as replicas catch up; after cooldownPeriod, scales back toward minReplicaCount.
+#
+#   # Part B (CPU HPA) under the SAME burst: holds at 1 replica (CPU ~20%), lag explodes.
+#   # That contrast IS the lesson: lag is the signal that knows you're falling behind.
+#
+# ACCEPTANCE CRITERIA
+#   [ ] The ScaledObject is READY/ACTIVE and KEDA created an HPA from it.
+#   [ ] Under a lag burst, replicas scale UP roughly as ceil(totalLag / lagThreshold).
+#   [ ] When the burst stops, lag drains and replicas scale DOWN after the cooldown.
+#   [ ] The CPU-HPA contrast (Part B) does NOT scale up under the same burst, and you
+#       can explain why lag beats CPU for an event-driven consumer.
+#   [ ] You can state the cold-start / flapping tradeoffs and how the stabilization
+#       windows + cooldownPeriod address flapping (Lecture 2 §2.3).
+# -----------------------------------------------------------------------------

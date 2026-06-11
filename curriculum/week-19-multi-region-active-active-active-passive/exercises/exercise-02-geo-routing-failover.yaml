@@ -1,0 +1,178 @@
+# Exercise 2 — Geo-Routing and Health-Checked Failover (runnable config)
+#
+# Goal: A COMPLETE, applyable CoreDNS-based geo-routing + failover layer for the
+#       two-region cart topology. It routes READS to the local region and WRITES
+#       to the primary region, and — the point of the exercise — flips the
+#       failover record to region B when region A's health check fails. The TTL
+#       on the records is set deliberately LOW so you can SEE the TTL tax:
+#       lower it and failover propagates fast; raise it and cached clients keep
+#       hitting the dead region for up to TTL.
+#
+#       This is the syllabus "geo-routing (DNS, anycast, GeoDNS, GSLB)" made
+#       concrete with the one mechanism you can run locally: health-checked DNS.
+#
+# Estimated time: 60 minutes. Runnable.
+#
+# PREREQUISITES
+#   - Exercise 1 done: two Kind regions with Postgres primary (A) + replica (B).
+#   - CoreDNS available (it ships in every Kind cluster as the cluster DNS; here
+#     we run a SECOND CoreDNS as our "global" geo-router so we don't disturb
+#     cluster DNS). `dig`/`nslookup` to resolve records.
+#   - Your cart/inventory Services exist in each region (or the Postgres stand-in).
+#
+# HOW TO USE THIS FILE
+#   1. Apply the geo-router CoreDNS + its Corefile (Part A) into region A's cluster
+#      (it acts as the notional GLOBAL resolver clients use):
+#        kubectl --context kind-region-a apply -f exercise-02-geo-routing-failover.yaml
+#   2. Resolve the names and see the routing:
+#        # write endpoint -> the PRIMARY region (A) while A is healthy:
+#        dig @<coredns-svc-ip> write.shop.internal +short
+#        # read endpoint  -> the LOCAL region's replica:
+#        dig @<coredns-svc-ip> read.shop.internal +short
+#   3. Watch the TTL tax: note the TTL on the answer (dig shows it), then change
+#      the active record and observe that a cached resolver keeps the old answer
+#      for up to TTL seconds.
+#   4. Simulate region-A failure and watch the health check flip write.shop.internal
+#      to region B (see the failover ConfigMap and the health-probe note at bottom).
+#
+# ============================================================================
+# Part A — the geo-router: CoreDNS with geo + failover records
+# ============================================================================
+# The Corefile encodes the routing policy: read-local, write-primary, with a
+# health-checked failover record for the write endpoint. TTLs are LOW on the
+# failover-critical 'write' record (5s) so failover propagates fast — the whole
+# TTL-tax lesson. The 'read' record can have a higher TTL (reads are local and
+# tolerant), shown at 30s to make the contrast visible.
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: geo-router-corefile
+  namespace: default
+data:
+  Corefile: |
+    shop.internal:53 {
+        # 'write.shop.internal' -> the PRIMARY region's Postgres/cart endpoint.
+        # LOW TTL (5s): this is the failover-critical record, so cached clients
+        # recover quickly after a cutover. This is the TTL-tax knob.
+        template IN A write.shop.internal {
+            match "^write\.shop\.internal\.$"
+            answer "{{ .Name }} 5 IN A 10.96.0.10"   # region-A primary VIP (low TTL)
+            fallthrough
+        }
+        # 'read.shop.internal' -> the LOCAL region's replica. Higher TTL (30s):
+        # reads are local and tolerant, so we cache longer to cut query volume.
+        template IN A read.shop.internal {
+            match "^read\.shop\.internal\.$"
+            answer "{{ .Name }} 30 IN A 10.96.0.11"   # local replica VIP (higher TTL)
+            fallthrough
+        }
+        log
+        errors
+    }
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: geo-router
+  namespace: default
+spec:
+  replicas: 1
+  selector: { matchLabels: { app: geo-router } }
+  template:
+    metadata: { labels: { app: geo-router } }
+    spec:
+      containers:
+      - name: coredns
+        image: coredns/coredns:1.11.1
+        args: ["-conf", "/etc/coredns/Corefile"]
+        ports:
+        - { containerPort: 53, protocol: UDP }
+        volumeMounts:
+        - { name: cfg, mountPath: /etc/coredns }
+      volumes:
+      - name: cfg
+        configMap: { name: geo-router-corefile }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: geo-router
+  namespace: default
+spec:
+  selector: { app: geo-router }
+  ports:
+  - { port: 53, targetPort: 53, protocol: UDP }
+
+# ============================================================================
+# Part B — the failover flip (apply when region A is "down")
+# ============================================================================
+# On primary failure, your failover automation (or you, by hand in this lab)
+# repoints write.shop.internal to region B's PROMOTED primary. In production a
+# GSLB health check does this automatically; here you apply this patched
+# ConfigMap and restart the geo-router. Because the write record's TTL is 5s,
+# clients pick up the new answer within ~5s of cutover — that is the TTL tax,
+# bounded by your chosen TTL.
+#
+#   kubectl --context kind-region-a apply -f - <<'EOF'
+#   apiVersion: v1
+#   kind: ConfigMap
+#   metadata: { name: geo-router-corefile, namespace: default }
+#   data:
+#     Corefile: |
+#       shop.internal:53 {
+#           template IN A write.shop.internal {
+#               match "^write\.shop\.internal\.$"
+#               answer "{{ .Name }} 5 IN A 10.96.0.20"   # NOW region-B promoted primary
+#               fallthrough
+#           }
+#           log
+#           errors
+#       }
+#   EOF
+#   kubectl --context kind-region-a rollout restart deploy/geo-router
+#
+# The health-check that AUTOMATES this flip (the GSLB behavior) is a probe loop:
+#   while true; do
+#     if ! pg_isready -h <region-a-primary> -t 2; then
+#       echo "PRIMARY A unhealthy -> flipping write record to region B"
+#       # apply the patched ConfigMap above, restart geo-router
+#       break
+#     fi
+#     sleep 2
+#   done
+# Detection cadence (sleep 2 + timeout 2) is a term in your RTO. Too tight =
+# flapping on a blip; too loose = detection dominates the RTO. This is the
+# 'detect' term from Lecture 1 §2.1, made into a real loop.
+
+# -----------------------------------------------------------------------------
+# Expected results
+# -----------------------------------------------------------------------------
+#
+#   # While region A is healthy, the write endpoint resolves to A, with a 5s TTL:
+#   $ dig @<geo-router-ip> write.shop.internal
+#   ;; ANSWER SECTION:
+#   write.shop.internal.  5  IN  A  10.96.0.10      <-- TTL=5 (the failover knob)
+#
+#   # The read endpoint resolves to the local replica with a 30s TTL:
+#   $ dig @<geo-router-ip> read.shop.internal
+#   read.shop.internal.   30 IN  A  10.96.0.11      <-- TTL=30 (reads tolerate caching)
+#
+#   # After the failover flip, the write endpoint moves to region B — and a
+#   # resolver that cached the old answer keeps returning 10.96.0.10 until its
+#   # cached TTL (<=5s) expires, THEN picks up 10.96.0.20. That lag IS the TTL tax:
+#   $ dig @<geo-router-ip> write.shop.internal +short
+#   10.96.0.20                                      <-- after <=5s, the new primary
+#
+# ACCEPTANCE CRITERIA
+#   [ ] write.shop.internal resolves to the PRIMARY region (A) with a low TTL (5s).
+#   [ ] read.shop.internal resolves to the LOCAL replica with a higher TTL (30s).
+#   [ ] After the failover flip, write.shop.internal moves to region B, and you
+#       OBSERVED a cached resolver keep the old answer for up to the TTL — the
+#       TTL tax, demonstrated.
+#   [ ] You can state: effective RTO = failover RTO + DNS TTL, which is why
+#       failover-critical records run low TTLs (and why anycast failover, with
+#       no DNS cache, can be faster).
+#   [ ] You identified the detection cadence (the health-probe sleep/timeout) as
+#       the 'detect' term in the RTO budget.
+# -----------------------------------------------------------------------------

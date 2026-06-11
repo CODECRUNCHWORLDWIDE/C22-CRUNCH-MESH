@@ -1,0 +1,245 @@
+# Exercise 2 — Thanos and the RED PromQL (runnable Prometheus + Thanos config)
+#
+# Goal: A COMPLETE, applyable Prometheus + Thanos deployment that gives you global,
+#       deduplicated, long-term metrics on object storage — Sidecar, Store Gateway,
+#       Query, and Compactor — plus the PromQL RED queries to run against the global
+#       Thanos Query view. This is the syllabus's "stand up Prometheus + Thanos."
+#
+# Estimated time: 60 minutes. Runnable.
+#
+# PREREQUISITES
+#   - Exercise 1 done: the OTel Collector exports app metrics on :8889, and MinIO is up
+#     with a `thanos` bucket (access key minio / secret minio123).
+#   - Your services + the mesh expose metrics (http_server_requests_total,
+#     http_server_request_duration_seconds_bucket, or the mesh's istio_requests_total).
+#   - kubectl, and a port-forward to Thanos Query at the end.
+#
+# HOW TO USE THIS FILE
+#   1. Apply it:  kubectl apply -n observability -f exercise-02-thanos-and-promql.yaml
+#   2. Wait for prometheus (with sidecar), thanos-store, thanos-query, thanos-compactor Ready.
+#   3. Port-forward Thanos Query and run the PromQL at the BOTTOM of this file:
+#        kubectl port-forward -n observability svc/thanos-query 9090:9090
+#      Open http://localhost:9090 and run each RED query.
+#   4. Run TWO prometheus replicas (replica: A and B) and confirm Thanos Query DEDUPLICATES
+#      them (one line per series, not two) with the `dedup` checkbox on.
+#
+# ============================================================================
+# Part A — Thanos object-store config (the bucket all components share)
+# ============================================================================
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: thanos-objstore
+  namespace: observability
+stringData:
+  objstore.yml: |
+    type: S3
+    config:
+      bucket: thanos
+      endpoint: minio.observability:9000
+      access_key: minio
+      secret_key: minio123
+      insecure: true                  # lab MinIO over plain HTTP; use TLS in production
+# ============================================================================
+# Part B — Prometheus + the Thanos Sidecar (uploads blocks + serves recent data)
+# ============================================================================
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: observability
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 15s
+      external_labels:
+        cluster: kind-shop
+        replica: A                    # CRUCIAL: identifies THIS replica for Thanos dedup
+    scrape_configs:
+      - job_name: otel-collector       # the app metrics the Collector exports (Exercise 1)
+        static_configs:
+          - targets: ["otel-collector.observability:8889"]
+      - job_name: istio-mesh           # the mesh's istio_requests_total (Week 8)
+        kubernetes_sd_configs: [{ role: pod }]
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_container_port_name]
+            action: keep
+            regex: ".*-envoy-prom"
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: prometheus
+  namespace: observability
+spec:
+  serviceName: prometheus
+  replicas: 1                          # set to 2 + a second replica label to demo dedup (see notes)
+  selector: { matchLabels: { app: prometheus } }
+  template:
+    metadata: { labels: { app: prometheus } }
+    spec:
+      containers:
+      - name: prometheus
+        image: prom/prometheus:latest
+        args:
+          - "--config.file=/etc/prometheus/prometheus.yml"
+          - "--storage.tsdb.path=/data"
+          - "--storage.tsdb.max-block-duration=2h"     # small blocks so the sidecar uploads often
+          - "--storage.tsdb.min-block-duration=2h"
+          - "--web.enable-lifecycle"
+          - "--enable-feature=exemplar-storage"          # store exemplars (the metric->trace link)
+        ports: [{ containerPort: 9090 }]
+        volumeMounts:
+          - { name: config, mountPath: /etc/prometheus }
+          - { name: data, mountPath: /data }
+      - name: thanos-sidecar
+        image: quay.io/thanos/thanos:latest
+        args:
+          - "sidecar"
+          - "--tsdb.path=/data"
+          - "--prometheus.url=http://localhost:9090"
+          - "--objstore.config-file=/etc/thanos/objstore.yml"   # uploads blocks to MinIO
+          - "--grpc-address=0.0.0.0:10901"                       # StoreAPI: serves recent data
+        ports: [{ containerPort: 10901, name: grpc }]
+        volumeMounts:
+          - { name: data, mountPath: /data }
+          - { name: objstore, mountPath: /etc/thanos }
+      volumes:
+        - { name: config, configMap: { name: prometheus-config } }
+        - { name: objstore, secret: { secretName: thanos-objstore } }
+  volumeClaimTemplates:
+    - metadata: { name: data }
+      spec: { accessModes: ["ReadWriteOnce"], resources: { requests: { storage: 5Gi } } }
+# ============================================================================
+# Part C — Thanos Store Gateway (serves HISTORICAL blocks from object storage)
+# ============================================================================
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: thanos-store, namespace: observability }
+spec:
+  selector: { matchLabels: { app: thanos-store } }
+  template:
+    metadata: { labels: { app: thanos-store } }
+    spec:
+      containers:
+      - name: thanos-store
+        image: quay.io/thanos/thanos:latest
+        args:
+          - "store"
+          - "--objstore.config-file=/etc/thanos/objstore.yml"   # reads the long-term blocks
+          - "--grpc-address=0.0.0.0:10901"                       # StoreAPI for historical data
+        ports: [{ containerPort: 10901, name: grpc }]
+        volumeMounts: [{ name: objstore, mountPath: /etc/thanos }]
+      volumes:
+        - { name: objstore, secret: { secretName: thanos-objstore } }
+# ============================================================================
+# Part D — Thanos Query (deduplicates HA replicas + fans out to every StoreAPI)
+# ============================================================================
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: thanos-query, namespace: observability }
+spec:
+  selector: { matchLabels: { app: thanos-query } }
+  template:
+    metadata: { labels: { app: thanos-query } }
+    spec:
+      containers:
+      - name: thanos-query
+        image: quay.io/thanos/thanos:latest
+        args:
+          - "query"
+          - "--http-address=0.0.0.0:9090"
+          - "--query.replica-label=replica"            # dedup key: collapses replica A and B
+          - "--endpoint=dnssrv+_grpc._tcp.thanos-sidecar.observability.svc.cluster.local"
+          - "--endpoint=dnssrv+_grpc._tcp.thanos-store.observability.svc.cluster.local"
+        ports: [{ containerPort: 9090 }]
+---
+apiVersion: v1
+kind: Service
+metadata: { name: thanos-query, namespace: observability }
+spec:
+  selector: { app: thanos-query }
+  ports: [{ port: 9090, targetPort: 9090 }]
+# ============================================================================
+# Part E — Thanos Compactor (compacts + DOWNSAMPLES; a SINGLETON — exactly one)
+# ============================================================================
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: { name: thanos-compactor, namespace: observability }
+spec:
+  replicas: 1                          # MUST be 1: two compactors corrupt each other's work
+  strategy: { type: Recreate }
+  selector: { matchLabels: { app: thanos-compactor } }
+  template:
+    metadata: { labels: { app: thanos-compactor } }
+    spec:
+      containers:
+      - name: thanos-compactor
+        image: quay.io/thanos/thanos:latest
+        args:
+          - "compact"
+          - "--wait"
+          - "--objstore.config-file=/etc/thanos/objstore.yml"
+          - "--retention.resolution-raw=30d"           # keep raw data 30 days
+          - "--retention.resolution-5m=180d"           # 5m-downsampled for 180 days
+          - "--retention.resolution-1h=365d"           # 1h-downsampled for a year (cheap long-range)
+          - "--data-dir=/data"
+        volumeMounts:
+          - { name: objstore, mountPath: /etc/thanos }
+          - { name: data, mountPath: /data }
+      volumes:
+        - { name: objstore, secret: { secretName: thanos-objstore } }
+        - { name: data, emptyDir: {} }
+
+# ============================================================================
+# Part F — the RED PromQL to run against Thanos Query (http://localhost:9090)
+# ============================================================================
+# Run each of these. They are the Rate/Errors/Duration signals you will turn into
+# SLIs next week. Substitute your real metric names if they differ.
+#
+#   # RATE — requests/sec to cart over 5m (rate() handles counter resets):
+#   sum(rate(http_server_requests_total{service="cart"}[5m]))
+#
+#   # ERRORS — the 5xx error RATIO (the SLI shape: bad events / total events):
+#   sum(rate(http_server_requests_total{service="cart",code=~"5.."}[5m]))
+#     / sum(rate(http_server_requests_total{service="cart"}[5m]))
+#
+#   # DURATION — p99 latency ESTIMATED from histogram buckets (note `by (le)`):
+#   histogram_quantile(0.99,
+#     sum(rate(http_server_request_duration_seconds_bucket{service="cart"}[5m])) by (le))
+#
+#   # The mesh's golden signal (same shape, from Week 8's istio_requests_total):
+#   sum(rate(istio_requests_total{destination_workload="cart",response_code!~"5.."}[5m]))
+#     / sum(rate(istio_requests_total{destination_workload="cart"}[5m]))
+#
+# DEDUP DEMO: scale prometheus to 2 with a second replica label (replica: B), and confirm
+# Thanos Query returns ONE line per series with `dedup` on — the HA double-count collapsed.
+
+# -----------------------------------------------------------------------------
+# Expected results
+# -----------------------------------------------------------------------------
+#
+#   # Thanos Query reports BOTH stores connected (sidecar = recent, store = historical):
+#   $ curl -s http://localhost:9090/api/v1/stores | jq '.data[].name'
+#   "sidecar"
+#   "store"
+#
+#   # The RATE query returns a per-second number; the ERROR RATIO is a value in [0,1];
+#   # the p99 returns a latency in seconds. If p99 looks suspiciously "round" (always the
+#   # same value), your histogram buckets are too coarse near the quantile (Lecture 2 §6.2).
+#
+#   # With 2 replicas + dedup, the same series appears ONCE, not twice.
+#
+# ACCEPTANCE CRITERIA
+#   [ ] thanos-query /api/v1/stores shows the sidecar AND the store gateway connected.
+#   [ ] The RATE, ERROR-RATIO, and p99 PromQL all return sensible values against Thanos Query.
+#   [ ] You can explain what each Thanos component does (sidecar=recent+upload, store=historical,
+#       query=dedup+fanout, compactor=compact+downsample) WITHOUT looking it up.
+#   [ ] Running 2 Prometheus replicas, Thanos Query deduplicates them to one series.
+#   [ ] The compactor is replicas: 1 (you can state why two would corrupt the bucket).
+# -----------------------------------------------------------------------------

@@ -1,0 +1,170 @@
+# Exercise 2 — Cilium Service Mesh (runnable manifests)
+#
+# Goal: Bring the cart topology onto Cilium's eBPF-based service mesh. Enable
+#       mutual authentication (mTLS WITHOUT a per-pod proxy), apply an L7
+#       CiliumNetworkPolicy that allows only cart -> inventory on the gRPC path,
+#       and CONFIRM there is no per-pod sidecar — the L4 + mTLS work happens in
+#       the kernel, and L7 goes through the per-NODE embedded Envoy only when a
+#       policy needs it.
+#
+# Estimated time: 75 minutes. Runnable.
+#
+# CLUSTER HYGIENE
+#   Cilium REPLACES the CNI, so use a FRESH Kind cluster created WITHOUT the
+#   default CNI, then install Cilium:
+#
+#     kind delete cluster
+#     # Kind config that disables the default CNI so Cilium can own networking:
+#     cat > kind-cilium.yaml <<'EOF'
+#     kind: Cluster
+#     apiVersion: kind.x-k8s.io/v1alpha4
+#     networking:
+#       disableDefaultCNI: true
+#       kubeProxyMode: none        # let Cilium replace kube-proxy too (eBPF)
+#     EOF
+#     kind create cluster --config kind-cilium.yaml
+#
+#     # Install Cilium with mesh + mutual auth + L7 (embedded Envoy) enabled:
+#     cilium install \
+#       --set kubeProxyReplacement=true \
+#       --set authentication.mutual.spire.enabled=true \
+#       --set l7Proxy=true
+#     cilium status --wait
+#     cilium connectivity test          # confirm the datapath works end to end
+#
+# THEN apply the manifests in this file:
+#     kubectl apply -f exercise-02-cilium-mesh.yaml
+#
+# WHAT TO CONFIRM (acceptance block at the bottom)
+#   - cart/inventory pods are 1/1 — NO per-pod sidecar (the kernel is the datapath).
+#   - mutual authentication is enforced (cilium reports the auth requirement met).
+#   - the L7 CiliumNetworkPolicy ALLOWS cart->inventory on the gRPC method path and
+#     DENIES anything else, via the per-node embedded Envoy.
+#   - hubble shows the flows (the eBPF observability layer, Cilium's Kiali).
+
+# ============================================================================
+# The workloads (deploy cart + inventory; labels drive the policy)
+# ============================================================================
+# (Use your real Phase 1 manifests; this is the minimal shape the policy targets.)
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: shop
+  labels:
+    # Opt the namespace into Cilium's mutual authentication where supported.
+    name: shop
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory
+  namespace: shop
+spec:
+  selector:
+    app: inventory
+  ports:
+  - name: grpc                       # port NAME matters for L7 policy matching
+    port: 50051
+    targetPort: 50051
+    appProtocol: grpc
+
+# ============================================================================
+# Mutual authentication: require it for traffic to inventory
+# ============================================================================
+# In Cilium, mutual auth is requested via the policy's authentication stanza.
+# There is NO per-pod proxy presenting the cert — the node's Cilium agent and the
+# eBPF datapath handle identity + encryption. This is the headline difference from
+# Istio/Linkerd: the security property is reached without a sidecar in the pod.
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: inventory-allow-cart-grpc
+  namespace: shop
+spec:
+  endpointSelector:
+    matchLabels:
+      app: inventory                 # this policy protects inventory pods
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        app: cart                    # ONLY cart may talk to inventory
+    # Require MUTUAL AUTHENTICATION on this path (eBPF/SPIFFE, no sidecar).
+    authentication:
+      mode: required
+    toPorts:
+    - ports:
+      - port: "50051"
+        protocol: TCP
+      # L7 rules force this traffic through the per-NODE embedded Envoy, which
+      # enforces the gRPC method path. Anything off this path is denied at L7.
+      rules:
+        http:
+        - method: "POST"
+          path: "/inventory.v1.InventoryService/.*"   # only the inventory methods
+        - method: "POST"
+          path: "/grpc.health.v1.Health/.*"           # allow health checks too
+
+# ============================================================================
+# Deny-by-default for the rest of the namespace
+# ============================================================================
+# A CiliumNetworkPolicy that selects all endpoints with an empty ingress = nothing
+# is allowed in unless another policy explicitly allows it. This is the zero-trust
+# floor; the policy above punches the one intended hole (cart->inventory).
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: default-deny-ingress
+  namespace: shop
+spec:
+  endpointSelector: {}               # all pods in shop
+  ingress:
+  - fromEndpoints: []                # allow from nobody by default
+  # (The allow-cart-grpc policy above is additive: it permits the one path.)
+
+# -----------------------------------------------------------------------------
+# Verifying the result
+# -----------------------------------------------------------------------------
+#
+#   # 1. NO per-pod sidecar — pods are 1/1, not 2/2:
+#   $ kubectl get pods -n shop
+#   cart-xxxxx        1/1   Running     <-- no sidecar; the kernel is the datapath
+#   inventory-xxxxx   1/1   Running
+#
+#   # 2. The L4 mesh + mTLS lives in the per-node Cilium agent, not the pods:
+#   $ kubectl get pods -n kube-system -l k8s-app=cilium
+#   cilium-xxxxx   1/1   Running     <-- one agent per NODE (DaemonSet)
+#
+#   # 3. cart -> inventory on the allowed gRPC path SUCCEEDS with mutual auth:
+#   $ kubectl exec -n shop deploy/cart -- grpcurl -plaintext \
+#       inventory.shop.svc.cluster.local:50051 grpc.health.v1.Health/Check
+#   { "status": "SERVING" }
+#
+#   # 4. A different pod, or an off-path call, is DENIED (deny-by-default + L7):
+#   $ kubectl exec -n shop deploy/frontend -- grpcurl -plaintext \
+#       inventory.shop.svc.cluster.local:50051 grpc.health.v1.Health/Check
+#   ... denied (no allow rule for frontend) ...
+#
+#   # 5. Watch the flows in Hubble (Cilium's eBPF observability — its "Kiali"):
+#   $ hubble observe --namespace shop --to-label app=inventory
+#   ... cart -> inventory FORWARDED (with auth) ; frontend -> inventory DROPPED ...
+#
+# THE LESSON: you reached the SAME security posture as Week 8 Istio (mTLS + least
+# privilege on cart->inventory) with NO per-pod proxy. L4 + mutual auth ran in the
+# kernel via eBPF; L7 (the method-path enforcement) ran in the per-node embedded
+# Envoy. The per-pod memory column in your benchmark is near-zero here — that is
+# the structuralist bet (Lecture 2 §1) made measurable.
+#
+# ACCEPTANCE CRITERIA
+#   [ ] cart/inventory pods are 1/1 (no per-pod sidecar) yet cart->inventory is
+#       mutually authenticated.
+#   [ ] cart -> inventory on the allowed gRPC path succeeds; a different source or
+#       an off-path call is denied (deny-by-default + the L7 rule).
+#   [ ] hubble shows the FORWARDED (allowed) and DROPPED (denied) flows.
+#   [ ] You recorded that there is NO per-pod proxy memory to measure here — and
+#       can explain why (eBPF L4 in the kernel; L7 amortized per-node).
+#   [ ] You can state what Cilium-as-mesh COSTS: it's also your CNI (coupling), and
+#       its L7 mesh story is younger than Istio's (Lecture 2 §1.3).
+# -----------------------------------------------------------------------------
