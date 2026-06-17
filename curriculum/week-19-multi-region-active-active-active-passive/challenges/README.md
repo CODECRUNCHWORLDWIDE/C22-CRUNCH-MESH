@@ -1,9 +1,0 @@
-# Week 19 — Challenges
-
-The exercises drill the mechanics. **The challenge makes you the on-call engineer** during the worst kind of multi-region incident: not a region that died cleanly, but a region that *looked* dead, got failed over, and then turned out to be alive the whole time — so now two primaries are both accepting writes and quietly diverging. This is **split-brain**, the failure mode that fencing exists to prevent, and it's the one that turns a clean region-loss into a data-integrity disaster.
-
-## Index
-
-1. **[Challenge 1 — The split-brain double-write](challenge-01-the-split-brain-double-write.md)** — a failover promoted the replica without fencing the old primary, which was only *partitioned from the health checker*, not actually down. Both regions now accept writes. Using replication state, the row histories on both sides, and the timeline, you must (a) prove this is split-brain and not ordinary replication lag, (b) name the exact missing step (fencing the old primary before promotion), and (c) reconcile the diverged data and fix the failover procedure so it can't happen again — **without** just picking one region and silently dropping the other's writes. (~90 min)
-
-Challenges are optional for passing the week, but this one is the single most consequential multi-region failure there is. A region that dies cleanly is the *easy* case; a region that's merely *unreachable from your health checker* while still serving some clients is the case that produces two primaries, and the difference between a DR plan that survives it and one that corrupts data is one step — fencing — done in the right order. The engineer who can look at two diverged primaries, say "we promoted without fencing; here's the reconciliation and here's the procedure fix," is the one who makes multi-region survivable instead of a liability.

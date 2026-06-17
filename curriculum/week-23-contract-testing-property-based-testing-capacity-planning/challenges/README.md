@@ -1,9 +1,0 @@
-# Week 23 — Challenges
-
-The exercises drill the mechanics. **The challenge makes you the engineer who has to explain why the tests were green and production still broke.** A pact suite is passing on every boundary, `can-i-deploy` says yes, the build is green — and a customer is being double-charged in production. "But the contract tests pass" is true and useless. You have to find the gap between "the shape matched" and "the behavior was right," which is the single most important thing to understand about contract testing: what it proves and what it can't.
-
-## Index
-
-1. **[Challenge 1 — The contract that passed but prod broke](challenge-01-the-contract-that-passed-but-prod-broke.md)** — every Pact contract between `order`, `inventory`, and `payment` is green, the broker is all checkmarks, and yet orders are being double-charged in production. Using the pacts, the logs, and a property test you write, you must (a) prove the break is real despite green contracts, (b) explain *why* the contracts couldn't catch it — the semantic-vs-shape gap — and (c) write the property-based test that *does* catch it. (~90 min)
-
-Challenges are optional for passing the week, but this one is the lesson that separates someone who *uses* contract testing from someone who *understands* it. The most dangerous thing a green test suite can do is convince you the system is correct when it has only proven the system is well-shaped. The engineer who can look at a green broker and a production incident and say "right — the pact proves the boundary shape, not the idempotency semantics; here's the property test that proves the semantics" is the one who knows where each tool's guarantee stops. That boundary is exactly what next week's reviewers will probe when you present your green broker as a capstone artifact.

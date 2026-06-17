@@ -1,9 +1,0 @@
-# Week 20 — Challenges
-
-The exercises drill the mechanics. **The challenge makes you the on-call engineer** during the most insidious kind of CRDT incident: not one where the system crashed or errored, but one where *everything reported success* and the data is wrong anyway. An active-active cart "converged" after a partition heal — the dashboards are green, the replicas agree — and yet customers are emailing that items vanished from their carts. The convergence worked perfectly. The *type choice* didn't. This is the LWW footgun, in production, where "it converged" is actively hiding the data loss.
-
-## Index
-
-1. **[Challenge 1 — The LWW that ate the cart](challenge-01-the-lww-that-ate-the-cart.md)** — an active-active cart modeled its items as an LWW-register on the whole cart. After a partition heal the replicas converge cleanly (no errors, green metrics) but one region's concurrent adds are silently gone. Using the write history, the vector clocks, and the convergence trace, you must (a) prove the data loss is real and that the system "converged" anyway, (b) name why LWW-on-a-set is the wrong type and convergence hid the bug, and (c) fix it by changing the *type* (OR-set / multiset) — not by adding retries, not by "syncing more often", not by picking a winner region. (~90 min)
-
-Challenges are optional for passing the week, but this one is the single most important CRDT lesson there is. A CRDT that *errors* is easy — you see the error. A CRDT that *converges to a wrong value* is the dangerous one, because every signal says success: no exceptions, no failed health checks, replicas in perfect agreement — and real customer data is gone. The engineer who can look at a green "converged" dashboard, say "converged is not correct — this is an LWW-on-a-set footgun, here's the data loss and here's the type fix," is the one who keeps eventual consistency from quietly becoming eventual data loss.

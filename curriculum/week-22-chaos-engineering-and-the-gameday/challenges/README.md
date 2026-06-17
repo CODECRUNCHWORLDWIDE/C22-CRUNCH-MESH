@@ -1,9 +1,0 @@
-# Week 22 — Challenges
-
-The exercises drill the mechanics. **The challenge makes you the on-call engineer during a live gameday.** You inject a fault, a steady-state metric does something you didn't predict, and you have to diagnose the real bug from the outside — with the dashboards, the offsets, and `kubectl` — while the clock runs and the scribe records. Then you write the postmortem that turns the finding into a permanent fix. This is the closest the course gets to the real thing, and it is exactly capstone Drills A and B, rehearsed.
-
-## Index
-
-1. **[Challenge 1 — The gameday that found the bug](challenge-01-the-gameday-that-found-the-bug.md)** — run a gameday in which one experiment refutes its hypothesis because of a *latent* bug (a retry budget that amplifies latency, a lossy CRDT merge, an HPA on the wrong metric, or a consumer that double-processes under redelivery). Using only the steady-state metrics, the offsets, and `kubectl`, you must (a) recognize the refutation live, (b) diagnose the real cause with at least two independent signals, (c) fix it without weakening the experiment, and (d) write a publishable blameless postmortem with contributing factors and owned action items. (~90 min)
-
-Challenges are optional for passing the week, but this one is the single most realistic gameday scenario there is. A gameday that confirms every hypothesis taught you nothing; the one that surfaces a latent bug two weeks before the capstone demo is the one that earned its time. The engineer who can watch a steady-state SLI breach, say "that's not noise, that's a finding," diagnose it under the clock, and produce a postmortem good enough to publish is the one who passes the capstone's chaos-drill deliverable — and the one a hiring panel believes has actually operated a system.

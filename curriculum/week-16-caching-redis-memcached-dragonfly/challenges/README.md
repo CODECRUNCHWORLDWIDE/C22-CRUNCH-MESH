@@ -1,9 +1,0 @@
-# Week 16 — Challenges
-
-The exercises drill the mechanics. **The challenge makes you the on-call engineer.** A customer swears their cart is wrong — they removed an item an hour ago and it's still showing up — but the database is correct, the API "looks fine," and restarting the service "fixes it" for a while before the complaints come back. You have to find why the cache and the source of truth disagree, from the outside, the way it always happens: the data is right *somewhere*, the user sees it wrong *somewhere else*, and the gap between them is a cache nobody is invalidating.
-
-## Index
-
-1. **[Challenge 1 — The stale cart that wouldn't die](challenge-01-the-stale-cart-that-wouldnt-die.md)** — a cart shows stale contents even though Postgres is correct, because a second write path (a promotions batch job) updates the database directly and never invalidates the cache. Using only `redis-cli`, the application logs, and the source of truth, you must (a) prove the cache disagrees with Postgres, (b) find *which* write path skipped the invalidation, and (c) fix it correctly — without just lowering the TTL to paper over it. (~90 min)
-
-Challenges are optional for passing the week, but this one is the single most realistic caching on-call scenario there is. "The cache is stale because a writer forgot to invalidate" is the number-one cache correctness bug, and the tempting "fix" (drop the TTL to 10 seconds) trades a correctness bug for a load problem and *still* serves stale data for 10 seconds. The engineer who can look at a stale-read complaint, `redis-cli GET` the key, compare it to Postgres, and say "the promotions job writes the DB without invalidating — we need CDC-driven invalidation, not a shorter TTL" in ten minutes is the one who makes a cache trustworthy instead of a liability.

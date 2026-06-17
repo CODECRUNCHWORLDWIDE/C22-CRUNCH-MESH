@@ -1,0 +1,9 @@
+# Week 17 — Challenges
+
+The exercises drill the mechanics. **The challenge makes you the on-call engineer staring at a half-built trace.** A request that should flow BFF → cart → inventory → Kafka → consumer shows up in Tempo as *two* disconnected traces: one that ends the moment the order is published, and another, unrelated one that starts when the consumer picks it up. The dashboard looks fine. The services all log "success." And yet you cannot answer the one question that matters during the incident — "what happened to *this* order, end to end?" — because the trace shatters at the most important hop. You have to find why from the outside, with the trace data itself.
+
+## Index
+
+1. **[Challenge 1 — The trace that stops at Kafka](./challenge-01-the-trace-that-stops-at-kafka.md)** — an end-to-end trace mysteriously ends at the producer and a separate, orphaned trace begins at the consumer. Using only the trace data in Tempo, the message headers on the wire, and the SDK config, you must (a) prove the trace is *splitting* at the Kafka boundary (not at gRPC, not at the mesh), (b) name the exact mechanism — a missing `inject` on produce or `extract` on consume — and (c) fix it so one trace survives the boundary, without changing what the services *do*. (~90 min)
+
+Challenges are optional for passing the week, but this one is the single most realistic distributed-tracing failure there is. The async boundary is where the hard bugs live, and it's exactly where the trace is most likely to break and least likely to be noticed — because each service traces *itself* perfectly. The engineer who can look at two disconnected traces, say "the context isn't crossing Kafka — we're missing the header inject," and fix it in ten minutes is the one who makes a tracing rollout actually deliver on its promise. The team that *can't* gives up on end-to-end tracing precisely when an async pipeline gets complex enough to need it.

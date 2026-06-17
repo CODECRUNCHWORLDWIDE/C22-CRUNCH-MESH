@@ -2,6 +2,10 @@
   "repo": "C22-CRUNCH-MESH",
   "files": [
     {
+      "path": "00-overview.md",
+      "title": "C22 \u00b7 Crunch Mesh \u2014 Microservices & Distributed Systems"
+    },
+    {
       "path": "CODE_OF_CONDUCT.md",
       "title": "Contributor Covenant Code of Conduct"
     },
@@ -10,1072 +14,1096 @@
       "title": "Contributing to Crunch Mesh"
     },
     {
-      "path": "README.md",
-      "title": "C22 \u00b7 Crunch Mesh \u2014 Microservices & Distributed Systems"
-    },
-    {
       "path": "community/CHARTER.md",
       "title": "C22 \u00b7 Crunch Mesh \u2014 Charter"
+    },
+    {
+      "path": "curriculum/.pytest_cache/00-overview.md",
+      "title": "pytest cache directory #"
     },
     {
       "path": "curriculum/SYLLABUS.md",
       "title": "C22 \u00b7 Crunch Mesh \u2014 Syllabus"
     },
     {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/README.md",
+      "path": "curriculum/week-01-cap-pacelc-and-flp/00-overview.md",
       "title": "Week 1 \u2014 The Literature: CAP, PACELC, and FLP"
     },
     {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/challenges/README.md",
-      "title": "Week 1 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/challenges/challenge-01-audit-a-real-system.md",
-      "title": "Challenge 1 \u2014 Audit a Real System's Consistency Claims"
-    },
-    {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/exercises/README.md",
-      "title": "Week 1 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/exercises/exercise-01-classify-the-systems.md",
-      "title": "Exercise 1 \u2014 Classify the Systems"
-    },
-    {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/homework.md",
-      "title": "Week 1 Homework"
-    },
-    {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/lecture-notes/01-cap-and-the-consistency-lattice.md",
-      "title": "Lecture 1 \u2014 CAP and the Consistency Lattice: What \"Consistency\" Actually Means"
-    },
-    {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/lecture-notes/02-pacelc-flp-safety-liveness.md",
-      "title": "Lecture 2 \u2014 PACELC, FLP, and Safety vs Liveness"
-    },
-    {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/mini-project/README.md",
-      "title": "Mini-Project \u2014 The Three-Regime Register: Exhibiting CAP Experimentally"
-    },
-    {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/quiz.md",
-      "title": "Week 1 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-01-cap-pacelc-and-flp/resources.md",
+      "path": "curriculum/week-01-cap-pacelc-and-flp/01-resources.md",
       "title": "Week 1 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-02-time-order-and-consensus/README.md",
+      "path": "curriculum/week-01-cap-pacelc-and-flp/02-lecture-notes/01-cap-and-the-consistency-lattice.md",
+      "title": "Lecture 1 \u2014 CAP and the Consistency Lattice: What \"Consistency\" Actually Means"
+    },
+    {
+      "path": "curriculum/week-01-cap-pacelc-and-flp/02-lecture-notes/02-pacelc-flp-safety-liveness.md",
+      "title": "Lecture 2 \u2014 PACELC, FLP, and Safety vs Liveness"
+    },
+    {
+      "path": "curriculum/week-01-cap-pacelc-and-flp/03-exercises/00-overview.md",
+      "title": "Week 1 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-01-cap-pacelc-and-flp/03-exercises/exercise-01-classify-the-systems.md",
+      "title": "Exercise 1 \u2014 Classify the Systems"
+    },
+    {
+      "path": "curriculum/week-01-cap-pacelc-and-flp/04-challenges/00-overview.md",
+      "title": "Week 1 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-01-cap-pacelc-and-flp/04-challenges/challenge-01-audit-a-real-system.md",
+      "title": "Challenge 1 \u2014 Audit a Real System's Consistency Claims"
+    },
+    {
+      "path": "curriculum/week-01-cap-pacelc-and-flp/05-quiz.md",
+      "title": "Week 1 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-01-cap-pacelc-and-flp/06-homework.md",
+      "title": "Week 1 Homework"
+    },
+    {
+      "path": "curriculum/week-01-cap-pacelc-and-flp/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 The Three-Regime Register: Exhibiting CAP Experimentally"
+    },
+    {
+      "path": "curriculum/week-02-time-order-and-consensus/00-overview.md",
       "title": "Week 2 \u2014 Time, Order, and Consensus"
     },
     {
-      "path": "curriculum/week-02-time-order-and-consensus/challenges/README.md",
-      "title": "Week 2 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-02-time-order-and-consensus/challenges/challenge-01-operate-an-etcd-cluster.md",
-      "title": "Challenge 1 \u2014 Operate a 3-Node etcd Cluster"
-    },
-    {
-      "path": "curriculum/week-02-time-order-and-consensus/exercises/README.md",
-      "title": "Week 2 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-02-time-order-and-consensus/exercises/exercise-01-trace-a-raft-election.md",
-      "title": "Exercise 1 \u2014 Trace a Raft Election"
-    },
-    {
-      "path": "curriculum/week-02-time-order-and-consensus/homework.md",
-      "title": "Week 2 Homework"
-    },
-    {
-      "path": "curriculum/week-02-time-order-and-consensus/lecture-notes/01-time-clocks-and-logical-order.md",
-      "title": "Lecture 1 \u2014 Time, Clocks, and Logical Order: Ordering Events Without a Global Clock"
-    },
-    {
-      "path": "curriculum/week-02-time-order-and-consensus/lecture-notes/02-consensus-raft-paxos-leases.md",
-      "title": "Lecture 2 \u2014 Consensus: Raft Deeply, Paxos in Overview, and Leases with Fencing"
-    },
-    {
-      "path": "curriculum/week-02-time-order-and-consensus/mini-project/README.md",
-      "title": "Mini-Project \u2014 Graft Raft onto the Register: A Replicated Log That Stays Linearizable"
-    },
-    {
-      "path": "curriculum/week-02-time-order-and-consensus/quiz.md",
-      "title": "Week 2 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-02-time-order-and-consensus/resources.md",
+      "path": "curriculum/week-02-time-order-and-consensus/01-resources.md",
       "title": "Week 2 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/README.md",
+      "path": "curriculum/week-02-time-order-and-consensus/02-lecture-notes/01-time-clocks-and-logical-order.md",
+      "title": "Lecture 1 \u2014 Time, Clocks, and Logical Order: Ordering Events Without a Global Clock"
+    },
+    {
+      "path": "curriculum/week-02-time-order-and-consensus/02-lecture-notes/02-consensus-raft-paxos-leases.md",
+      "title": "Lecture 2 \u2014 Consensus: Raft Deeply, Paxos in Overview, and Leases with Fencing"
+    },
+    {
+      "path": "curriculum/week-02-time-order-and-consensus/03-exercises/00-overview.md",
+      "title": "Week 2 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-02-time-order-and-consensus/03-exercises/exercise-01-trace-a-raft-election.md",
+      "title": "Exercise 1 \u2014 Trace a Raft Election"
+    },
+    {
+      "path": "curriculum/week-02-time-order-and-consensus/04-challenges/00-overview.md",
+      "title": "Week 2 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-02-time-order-and-consensus/04-challenges/challenge-01-operate-an-etcd-cluster.md",
+      "title": "Challenge 1 \u2014 Operate a 3-Node etcd Cluster"
+    },
+    {
+      "path": "curriculum/week-02-time-order-and-consensus/05-quiz.md",
+      "title": "Week 2 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-02-time-order-and-consensus/06-homework.md",
+      "title": "Week 2 Homework"
+    },
+    {
+      "path": "curriculum/week-02-time-order-and-consensus/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 Graft Raft onto the Register: A Replicated Log That Stays Linearizable"
+    },
+    {
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/00-overview.md",
       "title": "Week 3 \u2014 CRDTs, Eventual Consistency, and Conflict Resolution"
     },
     {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/challenges/README.md",
-      "title": "Week 3 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/challenges/challenge-01-lww-data-loss.md",
-      "title": "Challenge 1 \u2014 Catch LWW Losing Data, Then Fix It"
-    },
-    {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/exercises/README.md",
-      "title": "Week 3 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/exercises/exercise-01-classify-crdts.md",
-      "title": "Exercise 1 \u2014 Classify the CRDTs"
-    },
-    {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/homework.md",
-      "title": "Week 3 Homework"
-    },
-    {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/lecture-notes/01-eventual-consistency-and-the-semilattice.md",
-      "title": "Lecture 1 \u2014 Eventual Consistency and the Semilattice: Why CRDTs Converge"
-    },
-    {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/lecture-notes/02-the-crdt-zoo-metadata-and-production.md",
-      "title": "Lecture 2 \u2014 The CRDT Zoo, Metadata Growth, and CRDTs in Production"
-    },
-    {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/mini-project/README.md",
-      "title": "Mini-Project \u2014 The OR-Set Cart: Surviving a 3-Way Partition Heal"
-    },
-    {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/quiz.md",
-      "title": "Week 3 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/resources.md",
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/01-resources.md",
       "title": "Week 3 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/README.md",
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/02-lecture-notes/01-eventual-consistency-and-the-semilattice.md",
+      "title": "Lecture 1 \u2014 Eventual Consistency and the Semilattice: Why CRDTs Converge"
+    },
+    {
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/02-lecture-notes/02-the-crdt-zoo-metadata-and-production.md",
+      "title": "Lecture 2 \u2014 The CRDT Zoo, Metadata Growth, and CRDTs in Production"
+    },
+    {
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/03-exercises/00-overview.md",
+      "title": "Week 3 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/03-exercises/exercise-01-classify-crdts.md",
+      "title": "Exercise 1 \u2014 Classify the CRDTs"
+    },
+    {
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/04-challenges/00-overview.md",
+      "title": "Week 3 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/04-challenges/challenge-01-lww-data-loss.md",
+      "title": "Challenge 1 \u2014 Catch LWW Losing Data, Then Fix It"
+    },
+    {
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/05-quiz.md",
+      "title": "Week 3 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/06-homework.md",
+      "title": "Week 3 Homework"
+    },
+    {
+      "path": "curriculum/week-03-crdts-eventual-consistency-conflict-resolution/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 The OR-Set Cart: Surviving a 3-Way Partition Heal"
+    },
+    {
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/00-overview.md",
       "title": "Week 4 \u2014 Microservice Fundamentals and Decomposition"
     },
     {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/challenges/README.md",
-      "title": "Week 4 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/challenges/challenge-01-decompose-and-defend.md",
-      "title": "Challenge 1 \u2014 Decompose and Defend a 40 kLOC Monolith"
-    },
-    {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/exercises/README.md",
-      "title": "Week 4 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/exercises/exercise-01-draw-the-context-map.md",
-      "title": "Exercise 1 \u2014 Draw the Context Map"
-    },
-    {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/homework.md",
-      "title": "Week 4 Homework"
-    },
-    {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/lecture-notes/01-bounded-contexts-and-conways-law.md",
-      "title": "Lecture 1 \u2014 Bounded Contexts and Conway's Law: How to Draw the Lines"
-    },
-    {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/lecture-notes/02-decomposition-heuristics-and-anti-patterns.md",
-      "title": "Lecture 2 \u2014 Decomposition Heuristics and the Four Anti-Patterns"
-    },
-    {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/mini-project/README.md",
-      "title": "Mini-Project \u2014 Scaffold the Seam: `cart` (Go) and `catalog` (Python), Two Databases, One Contract"
-    },
-    {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/quiz.md",
-      "title": "Week 4 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/resources.md",
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/01-resources.md",
       "title": "Week 4 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/README.md",
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/02-lecture-notes/01-bounded-contexts-and-conways-law.md",
+      "title": "Lecture 1 \u2014 Bounded Contexts and Conway's Law: How to Draw the Lines"
+    },
+    {
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/02-lecture-notes/02-decomposition-heuristics-and-anti-patterns.md",
+      "title": "Lecture 2 \u2014 Decomposition Heuristics and the Four Anti-Patterns"
+    },
+    {
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/03-exercises/00-overview.md",
+      "title": "Week 4 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/03-exercises/exercise-01-draw-the-context-map.md",
+      "title": "Exercise 1 \u2014 Draw the Context Map"
+    },
+    {
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/04-challenges/00-overview.md",
+      "title": "Week 4 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/04-challenges/challenge-01-decompose-and-defend.md",
+      "title": "Challenge 1 \u2014 Decompose and Defend a 40 kLOC Monolith"
+    },
+    {
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/05-quiz.md",
+      "title": "Week 4 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/06-homework.md",
+      "title": "Week 4 Homework"
+    },
+    {
+      "path": "curriculum/week-04-microservice-fundamentals-and-decomposition/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 Scaffold the Seam: `cart` (Go) and `catalog` (Python), Two Databases, One Contract"
+    },
+    {
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/00-overview.md",
       "title": "Week 5 \u2014 API Contracts: gRPC, Protobuf, and the Typed Surface"
     },
     {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/challenges/README.md",
-      "title": "Week 5 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/challenges/challenge-01-evolve-without-breaking.md",
-      "title": "Challenge 1 \u2014 Evolve `catalog.v1` Without Breaking the Consumers"
-    },
-    {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/exercises/README.md",
-      "title": "Week 5 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/exercises/exercise-01-author-the-contract.md",
-      "title": "Exercise 1 \u2014 Author the Contract"
-    },
-    {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/homework.md",
-      "title": "Week 5 Homework"
-    },
-    {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/lecture-notes/01-protobuf-wire-format-and-schema-evolution.md",
-      "title": "Lecture 1 \u2014 The Protobuf Wire Format and the Rules That Keep the Promise"
-    },
-    {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/lecture-notes/02-grpc-rpc-kinds-interceptors-and-choosing.md",
-      "title": "Lecture 2 \u2014 gRPC RPC Kinds, the HTTP/2 Substrate, Interceptors, and Choosing the Right Tool"
-    },
-    {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/mini-project/README.md",
-      "title": "Mini-Project \u2014 Replace the HTTP Seam with a Versioned gRPC Contract"
-    },
-    {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/quiz.md",
-      "title": "Week 5 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-05-api-contracts-grpc-protobuf/resources.md",
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/01-resources.md",
       "title": "Week 5 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-06-the-single-hardened-service/README.md",
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/02-lecture-notes/01-protobuf-wire-format-and-schema-evolution.md",
+      "title": "Lecture 1 \u2014 The Protobuf Wire Format and the Rules That Keep the Promise"
+    },
+    {
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/02-lecture-notes/02-grpc-rpc-kinds-interceptors-and-choosing.md",
+      "title": "Lecture 2 \u2014 gRPC RPC Kinds, the HTTP/2 Substrate, Interceptors, and Choosing the Right Tool"
+    },
+    {
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/03-exercises/00-overview.md",
+      "title": "Week 5 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/03-exercises/exercise-01-author-the-contract.md",
+      "title": "Exercise 1 \u2014 Author the Contract"
+    },
+    {
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/04-challenges/00-overview.md",
+      "title": "Week 5 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/04-challenges/challenge-01-evolve-without-breaking.md",
+      "title": "Challenge 1 \u2014 Evolve `catalog.v1` Without Breaking the Consumers"
+    },
+    {
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/05-quiz.md",
+      "title": "Week 5 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/06-homework.md",
+      "title": "Week 5 Homework"
+    },
+    {
+      "path": "curriculum/week-05-api-contracts-grpc-protobuf/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 Replace the HTTP Seam with a Versioned gRPC Contract"
+    },
+    {
+      "path": "curriculum/week-06-the-single-hardened-service/00-overview.md",
       "title": "Week 6 \u2014 The Single Hardened Service"
     },
     {
-      "path": "curriculum/week-06-the-single-hardened-service/challenges/README.md",
-      "title": "Week 6 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-06-the-single-hardened-service/challenges/challenge-01-pass-the-readiness-review.md",
-      "title": "Challenge 1 \u2014 Pass the Production-Readiness Review"
-    },
-    {
-      "path": "curriculum/week-06-the-single-hardened-service/exercises/README.md",
-      "title": "Week 6 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-06-the-single-hardened-service/exercises/exercise-01-twelve-factor-audit.md",
-      "title": "Exercise 1 \u2014 The Twelve-Factor / Readiness Audit"
-    },
-    {
-      "path": "curriculum/week-06-the-single-hardened-service/homework.md",
-      "title": "Week 6 Homework"
-    },
-    {
-      "path": "curriculum/week-06-the-single-hardened-service/lecture-notes/01-twelve-factor-logging-health-and-shutdown.md",
-      "title": "Lecture 1 \u2014 Twelve-Factor, Structured Logging, Health Checks, and Graceful Shutdown"
-    },
-    {
-      "path": "curriculum/week-06-the-single-hardened-service/lecture-notes/02-observability-helm-and-the-runbook.md",
-      "title": "Lecture 2 \u2014 Baseline Observability, Helm Packaging, Secrets, and the Runbook"
-    },
-    {
-      "path": "curriculum/week-06-the-single-hardened-service/mini-project/README.md",
-      "title": "Mini-Project \u2014 Harden `cart` to Production-Ready: Logs, Probes, Shutdown, OTel, Helm, and a Runbook"
-    },
-    {
-      "path": "curriculum/week-06-the-single-hardened-service/quiz.md",
-      "title": "Week 6 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-06-the-single-hardened-service/resources.md",
+      "path": "curriculum/week-06-the-single-hardened-service/01-resources.md",
       "title": "Week 6 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/README.md",
+      "path": "curriculum/week-06-the-single-hardened-service/02-lecture-notes/01-twelve-factor-logging-health-and-shutdown.md",
+      "title": "Lecture 1 \u2014 Twelve-Factor, Structured Logging, Health Checks, and Graceful Shutdown"
+    },
+    {
+      "path": "curriculum/week-06-the-single-hardened-service/02-lecture-notes/02-observability-helm-and-the-runbook.md",
+      "title": "Lecture 2 \u2014 Baseline Observability, Helm Packaging, Secrets, and the Runbook"
+    },
+    {
+      "path": "curriculum/week-06-the-single-hardened-service/03-exercises/00-overview.md",
+      "title": "Week 6 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-06-the-single-hardened-service/03-exercises/exercise-01-twelve-factor-audit.md",
+      "title": "Exercise 1 \u2014 The Twelve-Factor / Readiness Audit"
+    },
+    {
+      "path": "curriculum/week-06-the-single-hardened-service/04-challenges/00-overview.md",
+      "title": "Week 6 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-06-the-single-hardened-service/04-challenges/challenge-01-pass-the-readiness-review.md",
+      "title": "Challenge 1 \u2014 Pass the Production-Readiness Review"
+    },
+    {
+      "path": "curriculum/week-06-the-single-hardened-service/05-quiz.md",
+      "title": "Week 6 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-06-the-single-hardened-service/06-homework.md",
+      "title": "Week 6 Homework"
+    },
+    {
+      "path": "curriculum/week-06-the-single-hardened-service/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 Harden `cart` to Production-Ready: Logs, Probes, Shutdown, OTel, Helm, and a Runbook"
+    },
+    {
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/00-overview.md",
       "title": "Week 7 \u2014 Service-to-Service: BFFs, Gateways, and Envoy"
     },
     {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/challenges/README.md",
-      "title": "Week 7 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/challenges/challenge-01-tame-the-retry-storm.md",
-      "title": "Challenge 1 \u2014 Tame the Retry Storm"
-    },
-    {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/exercises/README.md",
-      "title": "Week 7 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/exercises/exercise-01-envoy-ingress.md",
-      "title": "Exercise 1 \u2014 Envoy as Ingress in Front of cart and inventory"
-    },
-    {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/homework.md",
-      "title": "Week 7 Homework"
-    },
-    {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/lecture-notes/01-envoy-architecture-and-the-edge.md",
-      "title": "Lecture 1 \u2014 Envoy Architecture and the Edge: Listeners, Clusters, and the Threading Model"
-    },
-    {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/lecture-notes/02-resilience-bffs-and-the-browser.md",
-      "title": "Lecture 2 \u2014 Resilience, BFFs, and the Browser"
-    },
-    {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/mini-project/README.md",
-      "title": "Mini-Project \u2014 `cart-edge`: A Production-Shaped Gateway"
-    },
-    {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/quiz.md",
-      "title": "Week 7 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/resources.md",
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/01-resources.md",
       "title": "Week 7 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-08-istio-in-production/README.md",
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/02-lecture-notes/01-envoy-architecture-and-the-edge.md",
+      "title": "Lecture 1 \u2014 Envoy Architecture and the Edge: Listeners, Clusters, and the Threading Model"
+    },
+    {
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/02-lecture-notes/02-resilience-bffs-and-the-browser.md",
+      "title": "Lecture 2 \u2014 Resilience, BFFs, and the Browser"
+    },
+    {
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/03-exercises/00-overview.md",
+      "title": "Week 7 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/03-exercises/exercise-01-envoy-ingress.md",
+      "title": "Exercise 1 \u2014 Envoy as Ingress in Front of cart and inventory"
+    },
+    {
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/04-challenges/00-overview.md",
+      "title": "Week 7 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/04-challenges/challenge-01-tame-the-retry-storm.md",
+      "title": "Challenge 1 \u2014 Tame the Retry Storm"
+    },
+    {
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/05-quiz.md",
+      "title": "Week 7 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/06-homework.md",
+      "title": "Week 7 Homework"
+    },
+    {
+      "path": "curriculum/week-07-service-to-service-bffs-gateways-envoy/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `cart-edge`: A Production-Shaped Gateway"
+    },
+    {
+      "path": "curriculum/week-08-istio-in-production/00-overview.md",
       "title": "Week 8 \u2014 Istio in Production"
     },
     {
-      "path": "curriculum/week-08-istio-in-production/challenges/README.md",
-      "title": "Week 8 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-08-istio-in-production/challenges/challenge-01-the-sidecar-that-wouldnt-start.md",
-      "title": "Challenge 1 \u2014 The Sidecar That Wouldn't Start"
-    },
-    {
-      "path": "curriculum/week-08-istio-in-production/exercises/README.md",
-      "title": "Week 8 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-08-istio-in-production/exercises/exercise-01-install-and-mtls.md",
-      "title": "Exercise 1 \u2014 Install Istio and Turn On mTLS STRICT"
-    },
-    {
-      "path": "curriculum/week-08-istio-in-production/homework.md",
-      "title": "Week 8 Homework"
-    },
-    {
-      "path": "curriculum/week-08-istio-in-production/lecture-notes/01-istio-architecture-and-mtls.md",
-      "title": "Lecture 1 \u2014 Istio Architecture, Sidecar vs Ambient, and mTLS"
-    },
-    {
-      "path": "curriculum/week-08-istio-in-production/lecture-notes/02-traffic-management-canary-and-the-sidecar-tax.md",
-      "title": "Lecture 2 \u2014 Traffic Management, the Weighted Canary, and the Sidecar Tax"
-    },
-    {
-      "path": "curriculum/week-08-istio-in-production/mini-project/README.md",
-      "title": "Mini-Project \u2014 `cart-mesh`: The Cart Topology in Istio, mTLS-Strict and Canary-Ready"
-    },
-    {
-      "path": "curriculum/week-08-istio-in-production/quiz.md",
-      "title": "Week 8 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-08-istio-in-production/resources.md",
+      "path": "curriculum/week-08-istio-in-production/01-resources.md",
       "title": "Week 8 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/README.md",
+      "path": "curriculum/week-08-istio-in-production/02-lecture-notes/01-istio-architecture-and-mtls.md",
+      "title": "Lecture 1 \u2014 Istio Architecture, Sidecar vs Ambient, and mTLS"
+    },
+    {
+      "path": "curriculum/week-08-istio-in-production/02-lecture-notes/02-traffic-management-canary-and-the-sidecar-tax.md",
+      "title": "Lecture 2 \u2014 Traffic Management, the Weighted Canary, and the Sidecar Tax"
+    },
+    {
+      "path": "curriculum/week-08-istio-in-production/03-exercises/00-overview.md",
+      "title": "Week 8 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-08-istio-in-production/03-exercises/exercise-01-install-and-mtls.md",
+      "title": "Exercise 1 \u2014 Install Istio and Turn On mTLS STRICT"
+    },
+    {
+      "path": "curriculum/week-08-istio-in-production/04-challenges/00-overview.md",
+      "title": "Week 8 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-08-istio-in-production/04-challenges/challenge-01-the-sidecar-that-wouldnt-start.md",
+      "title": "Challenge 1 \u2014 The Sidecar That Wouldn't Start"
+    },
+    {
+      "path": "curriculum/week-08-istio-in-production/05-quiz.md",
+      "title": "Week 8 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-08-istio-in-production/06-homework.md",
+      "title": "Week 8 Homework"
+    },
+    {
+      "path": "curriculum/week-08-istio-in-production/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `cart-mesh`: The Cart Topology in Istio, mTLS-Strict and Canary-Ready"
+    },
+    {
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/00-overview.md",
       "title": "Week 9 \u2014 Linkerd and Cilium Service Mesh \u2014 The Alternatives"
     },
     {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/challenges/README.md",
-      "title": "Week 9 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/challenges/challenge-01-defend-the-mesh-choice.md",
-      "title": "Challenge 1 \u2014 Defend the Mesh Choice"
-    },
-    {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/exercises/README.md",
-      "title": "Week 9 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/exercises/exercise-01-linkerd-cart.md",
-      "title": "Exercise 1 \u2014 Linkerd Cart"
-    },
-    {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/homework.md",
-      "title": "Week 9 Homework"
-    },
-    {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/lecture-notes/01-linkerd-and-the-rust-micro-proxy.md",
-      "title": "Lecture 1 \u2014 Linkerd and the Rust Micro-Proxy: Simplicity as a Feature"
-    },
-    {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/lecture-notes/02-cilium-ebpf-and-the-three-way-comparison.md",
-      "title": "Lecture 2 \u2014 Cilium, eBPF, and the Three-Way Comparison"
-    },
-    {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/mini-project/README.md",
-      "title": "Mini-Project \u2014 `mesh-bakeoff`: Three Meshes, One Topology, One Defensible ADR"
-    },
-    {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/quiz.md",
-      "title": "Week 9 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/resources.md",
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/01-resources.md",
       "title": "Week 9 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/README.md",
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/02-lecture-notes/01-linkerd-and-the-rust-micro-proxy.md",
+      "title": "Lecture 1 \u2014 Linkerd and the Rust Micro-Proxy: Simplicity as a Feature"
+    },
+    {
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/02-lecture-notes/02-cilium-ebpf-and-the-three-way-comparison.md",
+      "title": "Lecture 2 \u2014 Cilium, eBPF, and the Three-Way Comparison"
+    },
+    {
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/03-exercises/00-overview.md",
+      "title": "Week 9 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/03-exercises/exercise-01-linkerd-cart.md",
+      "title": "Exercise 1 \u2014 Linkerd Cart"
+    },
+    {
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/04-challenges/00-overview.md",
+      "title": "Week 9 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/04-challenges/challenge-01-defend-the-mesh-choice.md",
+      "title": "Challenge 1 \u2014 Defend the Mesh Choice"
+    },
+    {
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/05-quiz.md",
+      "title": "Week 9 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/06-homework.md",
+      "title": "Week 9 Homework"
+    },
+    {
+      "path": "curriculum/week-09-linkerd-and-cilium-service-mesh/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `mesh-bakeoff`: Three Meshes, One Topology, One Defensible ADR"
+    },
+    {
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/00-overview.md",
       "title": "Week 10 \u2014 Eventing: Kafka and Redpanda"
     },
     {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/challenges/README.md",
-      "title": "Week 10 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/challenges/challenge-01-diagnose-three-lag-faults.md",
-      "title": "Challenge 1 \u2014 Diagnose Three Consumer-Lag Faults on a Live Cluster"
-    },
-    {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/exercises/README.md",
-      "title": "Week 10 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/exercises/exercise-01-strimzi-on-kind.md",
-      "title": "Exercise 1 \u2014 Strimzi on Kind: Stand Up a Real 3-Broker Kafka Cluster"
-    },
-    {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/homework.md",
-      "title": "Week 10 Homework"
-    },
-    {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/lecture-notes/01-the-log-is-the-truth.md",
-      "title": "Lecture 1 \u2014 The Log Is the Truth: Partitions, Offsets, Replication, and Delivery Semantics"
-    },
-    {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/lecture-notes/02-redpanda-retention-and-operating-the-cluster.md",
-      "title": "Lecture 2 \u2014 Redpanda, Retention and Compaction, and Operating the Cluster"
-    },
-    {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/mini-project/README.md",
-      "title": "Mini-Project \u2014 `order-events`: One Benchmark, Two Engines, Honest Numbers"
-    },
-    {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/quiz.md",
-      "title": "Week 10 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-10-eventing-kafka-and-redpanda/resources.md",
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/01-resources.md",
       "title": "Week 10 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/README.md",
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/02-lecture-notes/01-the-log-is-the-truth.md",
+      "title": "Lecture 1 \u2014 The Log Is the Truth: Partitions, Offsets, Replication, and Delivery Semantics"
+    },
+    {
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/02-lecture-notes/02-redpanda-retention-and-operating-the-cluster.md",
+      "title": "Lecture 2 \u2014 Redpanda, Retention and Compaction, and Operating the Cluster"
+    },
+    {
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/03-exercises/00-overview.md",
+      "title": "Week 10 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/03-exercises/exercise-01-strimzi-on-kind.md",
+      "title": "Exercise 1 \u2014 Strimzi on Kind: Stand Up a Real 3-Broker Kafka Cluster"
+    },
+    {
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/04-challenges/00-overview.md",
+      "title": "Week 10 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/04-challenges/challenge-01-diagnose-three-lag-faults.md",
+      "title": "Challenge 1 \u2014 Diagnose Three Consumer-Lag Faults on a Live Cluster"
+    },
+    {
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/05-quiz.md",
+      "title": "Week 10 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/06-homework.md",
+      "title": "Week 10 Homework"
+    },
+    {
+      "path": "curriculum/week-10-eventing-kafka-and-redpanda/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `order-events`: One Benchmark, Two Engines, Honest Numbers"
+    },
+    {
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/00-overview.md",
       "title": "Week 11 \u2014 NATS JetStream, Pulsar, and Exactly-Once Semantics"
     },
     {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/challenges/README.md",
-      "title": "Week 11 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/challenges/challenge-01-diagnose-three-delivery-faults.md",
-      "title": "Challenge 1 \u2014 Diagnose Three Delivery-Semantics Faults"
-    },
-    {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/exercises/README.md",
-      "title": "Week 11 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/exercises/exercise-01-jetstream-and-pulsar.md",
-      "title": "Exercise 1 \u2014 JetStream and Pulsar Up Close"
-    },
-    {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/homework.md",
-      "title": "Week 11 Homework"
-    },
-    {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/lecture-notes/01-exactly-once-is-a-contract.md",
-      "title": "Lecture 1 \u2014 Exactly-Once Is a Contract, Not a Primitive: NATS JetStream and Pulsar"
-    },
-    {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/lecture-notes/02-the-outbox-and-idempotent-consumers.md",
-      "title": "Lecture 2 \u2014 The Outbox and Idempotent Consumers: Building the Guarantee Across the Boundary"
-    },
-    {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/mini-project/README.md",
-      "title": "Mini-Project \u2014 `idempotent-checkout`: Exactly-Once Effect, Proven Under Chaos"
-    },
-    {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/quiz.md",
-      "title": "Week 11 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/resources.md",
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/01-resources.md",
       "title": "Week 11 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/README.md",
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/02-lecture-notes/01-exactly-once-is-a-contract.md",
+      "title": "Lecture 1 \u2014 Exactly-Once Is a Contract, Not a Primitive: NATS JetStream and Pulsar"
+    },
+    {
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/02-lecture-notes/02-the-outbox-and-idempotent-consumers.md",
+      "title": "Lecture 2 \u2014 The Outbox and Idempotent Consumers: Building the Guarantee Across the Boundary"
+    },
+    {
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/03-exercises/00-overview.md",
+      "title": "Week 11 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/03-exercises/exercise-01-jetstream-and-pulsar.md",
+      "title": "Exercise 1 \u2014 JetStream and Pulsar Up Close"
+    },
+    {
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/04-challenges/00-overview.md",
+      "title": "Week 11 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/04-challenges/challenge-01-diagnose-three-delivery-faults.md",
+      "title": "Challenge 1 \u2014 Diagnose Three Delivery-Semantics Faults"
+    },
+    {
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/05-quiz.md",
+      "title": "Week 11 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/06-homework.md",
+      "title": "Week 11 Homework"
+    },
+    {
+      "path": "curriculum/week-11-nats-jetstream-pulsar-exactly-once/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `idempotent-checkout`: Exactly-Once Effect, Proven Under Chaos"
+    },
+    {
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/00-overview.md",
       "title": "Week 12 \u2014 Temporal and Workflow Orchestration"
     },
     {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/challenges/README.md",
-      "title": "Week 12 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/challenges/challenge-01-diagnose-three-determinism-faults.md",
-      "title": "Challenge 1 \u2014 Diagnose Three Determinism / Versioning Faults"
-    },
-    {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/exercises/README.md",
-      "title": "Week 12 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/exercises/exercise-01-temporal-dev-server.md",
-      "title": "Exercise 1 \u2014 The Temporal Dev Server and Your First Workflow"
-    },
-    {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/homework.md",
-      "title": "Week 12 Homework"
-    },
-    {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/lecture-notes/01-when-orchestration-wins.md",
-      "title": "Lecture 1 \u2014 When Orchestration Wins: Temporal Architecture, Determinism, and Activities"
-    },
-    {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/lecture-notes/02-sagas-signals-and-versioning.md",
-      "title": "Lecture 2 \u2014 Sagas, Signals, and Versioning: Building Durable Processes That Last"
-    },
-    {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/mini-project/README.md",
-      "title": "Mini-Project \u2014 `checkout-orchestrator`: The Week-11 Saga, Made Durable"
-    },
-    {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/quiz.md",
-      "title": "Week 12 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-12-temporal-and-workflow-orchestration/resources.md",
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/01-resources.md",
       "title": "Week 12 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/README.md",
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/02-lecture-notes/01-when-orchestration-wins.md",
+      "title": "Lecture 1 \u2014 When Orchestration Wins: Temporal Architecture, Determinism, and Activities"
+    },
+    {
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/02-lecture-notes/02-sagas-signals-and-versioning.md",
+      "title": "Lecture 2 \u2014 Sagas, Signals, and Versioning: Building Durable Processes That Last"
+    },
+    {
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/03-exercises/00-overview.md",
+      "title": "Week 12 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/03-exercises/exercise-01-temporal-dev-server.md",
+      "title": "Exercise 1 \u2014 The Temporal Dev Server and Your First Workflow"
+    },
+    {
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/04-challenges/00-overview.md",
+      "title": "Week 12 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/04-challenges/challenge-01-diagnose-three-determinism-faults.md",
+      "title": "Challenge 1 \u2014 Diagnose Three Determinism / Versioning Faults"
+    },
+    {
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/05-quiz.md",
+      "title": "Week 12 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/06-homework.md",
+      "title": "Week 12 Homework"
+    },
+    {
+      "path": "curriculum/week-12-temporal-and-workflow-orchestration/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `checkout-orchestrator`: The Week-11 Saga, Made Durable"
+    },
+    {
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/00-overview.md",
       "title": "Week 13 \u2014 Postgres at Scale: Replication and Partitioning"
     },
     {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/challenges/README.md",
-      "title": "Week 13 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/challenges/challenge-01-diagnose-a-slow-storage-tier.md",
-      "title": "Challenge 1 \u2014 Diagnose a Slow Storage Tier on a Live Instance"
-    },
-    {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/exercises/README.md",
-      "title": "Week 13 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/exercises/exercise-01-streaming-replica.md",
-      "title": "Exercise 1 \u2014 Build a Streaming Replica and Measure Lag"
-    },
-    {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/homework.md",
-      "title": "Week 13 Homework"
-    },
-    {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/lecture-notes/01-replication-physical-and-logical.md",
-      "title": "Lecture 1 \u2014 Replication: Physical, Logical, and the WAL That Powers Both"
-    },
-    {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/lecture-notes/02-partitioning-bloat-pooling-and-sharding.md",
-      "title": "Lecture 2 \u2014 Partitioning, Bloat, Pooling, and the Sharding Decision"
-    },
-    {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/mini-project/README.md",
-      "title": "Mini-Project \u2014 `orders-at-scale`: A Defensible Before/After Partitioning Benchmark"
-    },
-    {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/quiz.md",
-      "title": "Week 13 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/resources.md",
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/01-resources.md",
       "title": "Week 13 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/README.md",
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/02-lecture-notes/01-replication-physical-and-logical.md",
+      "title": "Lecture 1 \u2014 Replication: Physical, Logical, and the WAL That Powers Both"
+    },
+    {
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/02-lecture-notes/02-partitioning-bloat-pooling-and-sharding.md",
+      "title": "Lecture 2 \u2014 Partitioning, Bloat, Pooling, and the Sharding Decision"
+    },
+    {
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/03-exercises/00-overview.md",
+      "title": "Week 13 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/03-exercises/exercise-01-streaming-replica.md",
+      "title": "Exercise 1 \u2014 Build a Streaming Replica and Measure Lag"
+    },
+    {
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/04-challenges/00-overview.md",
+      "title": "Week 13 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/04-challenges/challenge-01-diagnose-a-slow-storage-tier.md",
+      "title": "Challenge 1 \u2014 Diagnose a Slow Storage Tier on a Live Instance"
+    },
+    {
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/05-quiz.md",
+      "title": "Week 13 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/06-homework.md",
+      "title": "Week 13 Homework"
+    },
+    {
+      "path": "curriculum/week-13-postgres-at-scale-replication-partitioning/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `orders-at-scale`: A Defensible Before/After Partitioning Benchmark"
+    },
+    {
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/00-overview.md",
       "title": "Week 14 \u2014 Change Data Capture, CQRS, and Event Sourcing"
     },
     {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/challenges/README.md",
-      "title": "Week 14 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/challenges/challenge-01-classify-and-fix-four-designs.md",
-      "title": "Challenge 1 \u2014 Classify Four Designs and Fix the Dual-Writer"
-    },
-    {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/exercises/README.md",
-      "title": "Week 14 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/exercises/exercise-01-debezium-on-orders.md",
-      "title": "Exercise 1 \u2014 Debezium on the `orders` Table"
-    },
-    {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/homework.md",
-      "title": "Week 14 Homework"
-    },
-    {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/lecture-notes/01-cdc-debezium-and-the-dual-write-problem.md",
-      "title": "Lecture 1 \u2014 Change Data Capture: The Dual-Write Problem, the Outbox, and Debezium"
-    },
-    {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/lecture-notes/02-cqrs-event-sourcing-and-the-taxonomy.md",
-      "title": "Lecture 2 \u2014 CQRS, Event Sourcing, and the Taxonomy That Prevents Disasters"
-    },
-    {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/mini-project/README.md",
-      "title": "Mini-Project \u2014 `orders-cdc`: A CDC Pipeline That Survives Chaos"
-    },
-    {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/quiz.md",
-      "title": "Week 14 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/resources.md",
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/01-resources.md",
       "title": "Week 14 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/README.md",
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/02-lecture-notes/01-cdc-debezium-and-the-dual-write-problem.md",
+      "title": "Lecture 1 \u2014 Change Data Capture: The Dual-Write Problem, the Outbox, and Debezium"
+    },
+    {
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/02-lecture-notes/02-cqrs-event-sourcing-and-the-taxonomy.md",
+      "title": "Lecture 2 \u2014 CQRS, Event Sourcing, and the Taxonomy That Prevents Disasters"
+    },
+    {
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/03-exercises/00-overview.md",
+      "title": "Week 14 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/03-exercises/exercise-01-debezium-on-orders.md",
+      "title": "Exercise 1 \u2014 Debezium on the `orders` Table"
+    },
+    {
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/04-challenges/00-overview.md",
+      "title": "Week 14 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/04-challenges/challenge-01-classify-and-fix-four-designs.md",
+      "title": "Challenge 1 \u2014 Classify Four Designs and Fix the Dual-Writer"
+    },
+    {
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/05-quiz.md",
+      "title": "Week 14 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/06-homework.md",
+      "title": "Week 14 Homework"
+    },
+    {
+      "path": "curriculum/week-14-change-data-capture-cqrs-event-sourcing/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `orders-cdc`: A CDC Pipeline That Survives Chaos"
+    },
+    {
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/00-overview.md",
       "title": "Week 15 \u2014 The Modern Lakehouse: Iceberg, Trino, and OLAP"
     },
     {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/challenges/README.md",
-      "title": "Week 15 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/challenges/challenge-01-place-six-queries.md",
-      "title": "Challenge 1 \u2014 Place Six Queries on the OLTP/OLAP Boundary"
-    },
-    {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/exercises/README.md",
-      "title": "Week 15 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/exercises/exercise-01-stand-up-the-lakehouse.md",
-      "title": "Exercise 1 \u2014 Stand Up the Lakehouse"
-    },
-    {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/homework.md",
-      "title": "Week 15 Homework"
-    },
-    {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/lecture-notes/01-row-vs-column-oltp-olap-and-iceberg.md",
-      "title": "Lecture 1 \u2014 Row vs Column, the OLTP/OLAP Boundary, and the Iceberg Table Format"
-    },
-    {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/lecture-notes/02-trino-catalogs-federation-and-dbt.md",
-      "title": "Lecture 2 \u2014 Catalogs, Trino, Federation, and dbt"
-    },
-    {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/mini-project/README.md",
-      "title": "Mini-Project \u2014 `orders-lakehouse`: CDC \u2192 Iceberg, a dbt Rollup, and a Placement Report"
-    },
-    {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/quiz.md",
-      "title": "Week 15 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/resources.md",
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/01-resources.md",
       "title": "Week 15 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/README.md",
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/02-lecture-notes/01-row-vs-column-oltp-olap-and-iceberg.md",
+      "title": "Lecture 1 \u2014 Row vs Column, the OLTP/OLAP Boundary, and the Iceberg Table Format"
+    },
+    {
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/02-lecture-notes/02-trino-catalogs-federation-and-dbt.md",
+      "title": "Lecture 2 \u2014 Catalogs, Trino, Federation, and dbt"
+    },
+    {
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/03-exercises/00-overview.md",
+      "title": "Week 15 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/03-exercises/exercise-01-stand-up-the-lakehouse.md",
+      "title": "Exercise 1 \u2014 Stand Up the Lakehouse"
+    },
+    {
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/04-challenges/00-overview.md",
+      "title": "Week 15 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/04-challenges/challenge-01-place-six-queries.md",
+      "title": "Challenge 1 \u2014 Place Six Queries on the OLTP/OLAP Boundary"
+    },
+    {
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/05-quiz.md",
+      "title": "Week 15 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/06-homework.md",
+      "title": "Week 15 Homework"
+    },
+    {
+      "path": "curriculum/week-15-modern-lakehouse-iceberg-trino-olap/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `orders-lakehouse`: CDC \u2192 Iceberg, a dbt Rollup, and a Placement Report"
+    },
+    {
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/00-overview.md",
       "title": "Week 16 \u2014 Caching: Redis, Memcached, Dragonfly"
     },
     {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/challenges/README.md",
-      "title": "Week 16 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/challenges/challenge-01-the-stale-cart-that-wouldnt-die.md",
-      "title": "Challenge 1 \u2014 The Stale Cart That Wouldn't Die"
-    },
-    {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/exercises/README.md",
-      "title": "Week 16 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/exercises/exercise-01-look-aside-and-coalescing.md",
-      "title": "Exercise 1 \u2014 Look-aside with Request Coalescing"
-    },
-    {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/homework.md",
-      "title": "Week 16 Homework"
-    },
-    {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/lecture-notes/01-cache-patterns-invalidation-and-the-stampede.md",
-      "title": "Lecture 1 \u2014 Cache Patterns, Invalidation, and the Stampede"
-    },
-    {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/lecture-notes/02-engines-cluster-and-the-licensing-saga.md",
-      "title": "Lecture 2 \u2014 Engines, Redis Cluster, and the Licensing Saga"
-    },
-    {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/mini-project/README.md",
-      "title": "Mini-Project \u2014 `cart-cache`: A Hardened Look-Aside Cache with Stampede Protection, CDC Invalidation, and a Dragonfly Benchmark"
-    },
-    {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/quiz.md",
-      "title": "Week 16 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/resources.md",
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/01-resources.md",
       "title": "Week 16 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/README.md",
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/02-lecture-notes/01-cache-patterns-invalidation-and-the-stampede.md",
+      "title": "Lecture 1 \u2014 Cache Patterns, Invalidation, and the Stampede"
+    },
+    {
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/02-lecture-notes/02-engines-cluster-and-the-licensing-saga.md",
+      "title": "Lecture 2 \u2014 Engines, Redis Cluster, and the Licensing Saga"
+    },
+    {
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/03-exercises/00-overview.md",
+      "title": "Week 16 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/03-exercises/exercise-01-look-aside-and-coalescing.md",
+      "title": "Exercise 1 \u2014 Look-aside with Request Coalescing"
+    },
+    {
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/04-challenges/00-overview.md",
+      "title": "Week 16 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/04-challenges/challenge-01-the-stale-cart-that-wouldnt-die.md",
+      "title": "Challenge 1 \u2014 The Stale Cart That Wouldn't Die"
+    },
+    {
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/05-quiz.md",
+      "title": "Week 16 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/06-homework.md",
+      "title": "Week 16 Homework"
+    },
+    {
+      "path": "curriculum/week-16-caching-redis-memcached-dragonfly/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `cart-cache`: A Hardened Look-Aside Cache with Stampede Protection, CDC Invalidation, and a Dragonfly Benchmark"
+    },
+    {
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/00-overview.md",
       "title": "Week 17 \u2014 Observability: OpenTelemetry, Prometheus, Thanos, Tempo, Loki"
     },
     {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/challenges/README.md",
-      "title": "Week 17 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/challenges/challenge-01-the-trace-that-stops-at-kafka.md",
-      "title": "Challenge 1 \u2014 The Trace That Stops at Kafka"
-    },
-    {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/exercises/README.md",
-      "title": "Week 17 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/exercises/exercise-01-otel-collector-and-the-pipeline.md",
-      "title": "Exercise 1 \u2014 The OTel Collector and the Pipeline"
-    },
-    {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/homework.md",
-      "title": "Week 17 Homework"
-    },
-    {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/lecture-notes/01-opentelemetry-and-context-propagation.md",
-      "title": "Lecture 1 \u2014 OpenTelemetry, the Three Signals, and Context Propagation"
-    },
-    {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/lecture-notes/02-prometheus-thanos-tempo-loki-and-the-correlated-pane.md",
-      "title": "Lecture 2 \u2014 Prometheus, Thanos, Tempo, Loki, and the Correlated Pane"
-    },
-    {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/mini-project/README.md",
-      "title": "Mini-Project \u2014 `cart-observed`: The Three-Signal Stack on the Cart Topology"
-    },
-    {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/quiz.md",
-      "title": "Week 17 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/resources.md",
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/01-resources.md",
       "title": "Week 17 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/README.md",
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/02-lecture-notes/01-opentelemetry-and-context-propagation.md",
+      "title": "Lecture 1 \u2014 OpenTelemetry, the Three Signals, and Context Propagation"
+    },
+    {
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/02-lecture-notes/02-prometheus-thanos-tempo-loki-and-the-correlated-pane.md",
+      "title": "Lecture 2 \u2014 Prometheus, Thanos, Tempo, Loki, and the Correlated Pane"
+    },
+    {
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/03-exercises/00-overview.md",
+      "title": "Week 17 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/03-exercises/exercise-01-otel-collector-and-the-pipeline.md",
+      "title": "Exercise 1 \u2014 The OTel Collector and the Pipeline"
+    },
+    {
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/04-challenges/00-overview.md",
+      "title": "Week 17 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/04-challenges/challenge-01-the-trace-that-stops-at-kafka.md",
+      "title": "Challenge 1 \u2014 The Trace That Stops at Kafka"
+    },
+    {
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/05-quiz.md",
+      "title": "Week 17 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/06-homework.md",
+      "title": "Week 17 Homework"
+    },
+    {
+      "path": "curriculum/week-17-observability-opentelemetry-prometheus-thanos-tempo-loki/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `cart-observed`: The Three-Signal Stack on the Cart Topology"
+    },
+    {
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/00-overview.md",
       "title": "Week 18 \u2014 Reliability: SLI/SLO, Error Budgets, and the Patterns"
     },
     {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/challenges/README.md",
-      "title": "Week 18 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/challenges/challenge-01-the-retry-storm-that-took-down-payment.md",
-      "title": "Challenge 1 \u2014 The Retry Storm That Took Down Payment"
-    },
-    {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/exercises/README.md",
-      "title": "Week 18 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/exercises/exercise-01-slo-and-burn-rate.md",
-      "title": "Exercise 1 \u2014 The SLO and the Burn-Rate Alert"
-    },
-    {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/homework.md",
-      "title": "Week 18 Homework"
-    },
-    {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/lecture-notes/01-sli-slo-error-budgets-and-burn-rate.md",
-      "title": "Lecture 1 \u2014 SLIs, SLOs, Error Budgets, and Burn-Rate Alerting"
-    },
-    {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/lecture-notes/02-resilience-patterns-autoscaling-and-the-saturation-point.md",
-      "title": "Lecture 2 \u2014 Resilience Patterns, Autoscaling, and the Saturation Point"
-    },
-    {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/mini-project/README.md",
-      "title": "Mini-Project \u2014 `cart-reliable`: SLOs, Error Budgets, and the Patterns That Defend Them"
-    },
-    {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/quiz.md",
-      "title": "Week 18 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/resources.md",
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/01-resources.md",
       "title": "Week 18 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/README.md",
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/02-lecture-notes/01-sli-slo-error-budgets-and-burn-rate.md",
+      "title": "Lecture 1 \u2014 SLIs, SLOs, Error Budgets, and Burn-Rate Alerting"
+    },
+    {
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/02-lecture-notes/02-resilience-patterns-autoscaling-and-the-saturation-point.md",
+      "title": "Lecture 2 \u2014 Resilience Patterns, Autoscaling, and the Saturation Point"
+    },
+    {
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/03-exercises/00-overview.md",
+      "title": "Week 18 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/03-exercises/exercise-01-slo-and-burn-rate.md",
+      "title": "Exercise 1 \u2014 The SLO and the Burn-Rate Alert"
+    },
+    {
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/04-challenges/00-overview.md",
+      "title": "Week 18 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/04-challenges/challenge-01-the-retry-storm-that-took-down-payment.md",
+      "title": "Challenge 1 \u2014 The Retry Storm That Took Down Payment"
+    },
+    {
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/05-quiz.md",
+      "title": "Week 18 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/06-homework.md",
+      "title": "Week 18 Homework"
+    },
+    {
+      "path": "curriculum/week-18-reliability-sli-slo-error-budgets/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `cart-reliable`: SLOs, Error Budgets, and the Patterns That Defend Them"
+    },
+    {
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/00-overview.md",
       "title": "Week 19 \u2014 Multi-Region: Active-Active, Active-Passive, and the Choices"
     },
     {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/challenges/README.md",
-      "title": "Week 19 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/challenges/challenge-01-the-split-brain-double-write.md",
-      "title": "Challenge 1 \u2014 The Split-Brain Double-Write"
-    },
-    {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/exercises/README.md",
-      "title": "Week 19 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/exercises/exercise-01-two-region-postgres-replication.md",
-      "title": "Exercise 1 \u2014 Two Regions, Postgres Logical Replication Across Them"
-    },
-    {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/homework.md",
-      "title": "Week 19 Homework"
-    },
-    {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/lecture-notes/01-active-active-active-passive-rto-rpo.md",
-      "title": "Lecture 1 \u2014 Active-Active, Active-Passive, and the RTO/RPO Budget"
-    },
-    {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/lecture-notes/02-geo-routing-data-gravity-and-the-failover.md",
-      "title": "Lecture 2 \u2014 Geo-Routing, Data Gravity, and the Controlled Failover"
-    },
-    {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/mini-project/README.md",
-      "title": "Mini-Project \u2014 `cart-multiregion`: The Cart Topology Across Two Regions, with a Measured Failover"
-    },
-    {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/quiz.md",
-      "title": "Week 19 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-19-multi-region-active-active-active-passive/resources.md",
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/01-resources.md",
       "title": "Week 19 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-20-crdts-in-production/README.md",
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/02-lecture-notes/01-active-active-active-passive-rto-rpo.md",
+      "title": "Lecture 1 \u2014 Active-Active, Active-Passive, and the RTO/RPO Budget"
+    },
+    {
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/02-lecture-notes/02-geo-routing-data-gravity-and-the-failover.md",
+      "title": "Lecture 2 \u2014 Geo-Routing, Data Gravity, and the Controlled Failover"
+    },
+    {
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/03-exercises/00-overview.md",
+      "title": "Week 19 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/03-exercises/exercise-01-two-region-postgres-replication.md",
+      "title": "Exercise 1 \u2014 Two Regions, Postgres Logical Replication Across Them"
+    },
+    {
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/04-challenges/00-overview.md",
+      "title": "Week 19 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/04-challenges/challenge-01-the-split-brain-double-write.md",
+      "title": "Challenge 1 \u2014 The Split-Brain Double-Write"
+    },
+    {
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/05-quiz.md",
+      "title": "Week 19 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/06-homework.md",
+      "title": "Week 19 Homework"
+    },
+    {
+      "path": "curriculum/week-19-multi-region-active-active-active-passive/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `cart-multiregion`: The Cart Topology Across Two Regions, with a Measured Failover"
+    },
+    {
+      "path": "curriculum/week-20-crdts-in-production/00-overview.md",
       "title": "Week 20 \u2014 CRDTs in Production and Conflict Resolution"
     },
     {
-      "path": "curriculum/week-20-crdts-in-production/challenges/README.md",
-      "title": "Week 20 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-20-crdts-in-production/challenges/challenge-01-the-lww-that-ate-the-cart.md",
-      "title": "Challenge 1 \u2014 The LWW That Ate the Cart"
-    },
-    {
-      "path": "curriculum/week-20-crdts-in-production/exercises/README.md",
-      "title": "Week 20 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-20-crdts-in-production/exercises/exercise-01-or-set-cart-partition-heal.md",
-      "title": "Exercise 1 \u2014 The OR-Set Cart: Partition, Heal, Converge"
-    },
-    {
-      "path": "curriculum/week-20-crdts-in-production/homework.md",
-      "title": "Week 20 Homework"
-    },
-    {
-      "path": "curriculum/week-20-crdts-in-production/lecture-notes/01-production-crdt-stacks-and-convergence.md",
-      "title": "Lecture 1 \u2014 Production CRDT Stacks, Convergence, and Choosing the Type Per Field"
-    },
-    {
-      "path": "curriculum/week-20-crdts-in-production/lecture-notes/02-conflict-resolution-vector-clocks-metadata-and-limits.md",
-      "title": "Lecture 2 \u2014 Conflict Resolution, Vector Clocks, Metadata Cost, and the Limits"
-    },
-    {
-      "path": "curriculum/week-20-crdts-in-production/mini-project/README.md",
-      "title": "Mini-Project \u2014 `cart-crdt`: The Cart, Active-Active Across Two Regions, Proven Convergent and Correct"
-    },
-    {
-      "path": "curriculum/week-20-crdts-in-production/quiz.md",
-      "title": "Week 20 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-20-crdts-in-production/resources.md",
+      "path": "curriculum/week-20-crdts-in-production/01-resources.md",
       "title": "Week 20 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/README.md",
+      "path": "curriculum/week-20-crdts-in-production/02-lecture-notes/01-production-crdt-stacks-and-convergence.md",
+      "title": "Lecture 1 \u2014 Production CRDT Stacks, Convergence, and Choosing the Type Per Field"
+    },
+    {
+      "path": "curriculum/week-20-crdts-in-production/02-lecture-notes/02-conflict-resolution-vector-clocks-metadata-and-limits.md",
+      "title": "Lecture 2 \u2014 Conflict Resolution, Vector Clocks, Metadata Cost, and the Limits"
+    },
+    {
+      "path": "curriculum/week-20-crdts-in-production/03-exercises/00-overview.md",
+      "title": "Week 20 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-20-crdts-in-production/03-exercises/exercise-01-or-set-cart-partition-heal.md",
+      "title": "Exercise 1 \u2014 The OR-Set Cart: Partition, Heal, Converge"
+    },
+    {
+      "path": "curriculum/week-20-crdts-in-production/04-challenges/00-overview.md",
+      "title": "Week 20 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-20-crdts-in-production/04-challenges/challenge-01-the-lww-that-ate-the-cart.md",
+      "title": "Challenge 1 \u2014 The LWW That Ate the Cart"
+    },
+    {
+      "path": "curriculum/week-20-crdts-in-production/05-quiz.md",
+      "title": "Week 20 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-20-crdts-in-production/06-homework.md",
+      "title": "Week 20 Homework"
+    },
+    {
+      "path": "curriculum/week-20-crdts-in-production/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `cart-crdt`: The Cart, Active-Active Across Two Regions, Proven Convergent and Correct"
+    },
+    {
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/00-overview.md",
       "title": "Week 21 \u2014 Zero-Trust Networking: SPIFFE, SPIRE, OPA"
     },
     {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/challenges/README.md",
-      "title": "Week 21 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/challenges/challenge-01-the-over-broad-policy.md",
-      "title": "Challenge 1 \u2014 The Over-Broad Policy"
-    },
-    {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/exercises/README.md",
-      "title": "Week 21 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/exercises/exercise-01-deploy-spire-issue-svids.md",
-      "title": "Exercise 1 \u2014 Deploy SPIRE and Issue SVIDs"
-    },
-    {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/homework.md",
-      "title": "Week 21 Homework"
-    },
-    {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/lecture-notes/01-spiffe-spire-workload-identity-and-attestation.md",
-      "title": "Lecture 1 \u2014 SPIFFE, SPIRE, Workload Identity, and Attestation"
-    },
-    {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/lecture-notes/02-opa-rego-policy-as-code-and-admission-control.md",
-      "title": "Lecture 2 \u2014 OPA, Rego, Policy as Code, and Admission Control"
-    },
-    {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/mini-project/README.md",
-      "title": "Mini-Project \u2014 `cart-zerotrust`: The Multi-Region Cart, Identity-First and Policy-Enforced"
-    },
-    {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/quiz.md",
-      "title": "Week 21 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/resources.md",
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/01-resources.md",
       "title": "Week 21 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/README.md",
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/02-lecture-notes/01-spiffe-spire-workload-identity-and-attestation.md",
+      "title": "Lecture 1 \u2014 SPIFFE, SPIRE, Workload Identity, and Attestation"
+    },
+    {
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/02-lecture-notes/02-opa-rego-policy-as-code-and-admission-control.md",
+      "title": "Lecture 2 \u2014 OPA, Rego, Policy as Code, and Admission Control"
+    },
+    {
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/03-exercises/00-overview.md",
+      "title": "Week 21 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/03-exercises/exercise-01-deploy-spire-issue-svids.md",
+      "title": "Exercise 1 \u2014 Deploy SPIRE and Issue SVIDs"
+    },
+    {
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/04-challenges/00-overview.md",
+      "title": "Week 21 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/04-challenges/challenge-01-the-over-broad-policy.md",
+      "title": "Challenge 1 \u2014 The Over-Broad Policy"
+    },
+    {
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/05-quiz.md",
+      "title": "Week 21 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/06-homework.md",
+      "title": "Week 21 Homework"
+    },
+    {
+      "path": "curriculum/week-21-zero-trust-networking-spiffe-spire-opa/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `cart-zerotrust`: The Multi-Region Cart, Identity-First and Policy-Enforced"
+    },
+    {
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/00-overview.md",
       "title": "Week 22 \u2014 Chaos Engineering and the Gameday"
     },
     {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/challenges/README.md",
-      "title": "Week 22 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/challenges/challenge-01-the-gameday-that-found-the-bug.md",
-      "title": "Challenge 1 \u2014 The Gameday That Found the Bug"
-    },
-    {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/exercises/README.md",
-      "title": "Week 22 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/exercises/exercise-01-install-and-first-experiment.md",
-      "title": "Exercise 1 \u2014 Install Chaos Mesh and Run Your First Hypothesis-Driven Experiment"
-    },
-    {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/homework.md",
-      "title": "Week 22 Homework"
-    },
-    {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/lecture-notes/01-chaos-engineering-principles-and-the-experiment.md",
-      "title": "Lecture 1 \u2014 Chaos Engineering Principles, the Experiment, and the Tooling"
-    },
-    {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/lecture-notes/02-the-gameday-and-the-blameless-postmortem.md",
-      "title": "Lecture 2 \u2014 The Gameday and the Blameless Postmortem"
-    },
-    {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/mini-project/README.md",
-      "title": "Mini-Project \u2014 `marketplace-gameday`: A Full Gameday Harness, Run for Real"
-    },
-    {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/quiz.md",
-      "title": "Week 22 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/resources.md",
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/01-resources.md",
       "title": "Week 22 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/README.md",
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/02-lecture-notes/01-chaos-engineering-principles-and-the-experiment.md",
+      "title": "Lecture 1 \u2014 Chaos Engineering Principles, the Experiment, and the Tooling"
+    },
+    {
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/02-lecture-notes/02-the-gameday-and-the-blameless-postmortem.md",
+      "title": "Lecture 2 \u2014 The Gameday and the Blameless Postmortem"
+    },
+    {
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/03-exercises/00-overview.md",
+      "title": "Week 22 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/03-exercises/exercise-01-install-and-first-experiment.md",
+      "title": "Exercise 1 \u2014 Install Chaos Mesh and Run Your First Hypothesis-Driven Experiment"
+    },
+    {
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/04-challenges/00-overview.md",
+      "title": "Week 22 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/04-challenges/challenge-01-the-gameday-that-found-the-bug.md",
+      "title": "Challenge 1 \u2014 The Gameday That Found the Bug"
+    },
+    {
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/05-quiz.md",
+      "title": "Week 22 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/06-homework.md",
+      "title": "Week 22 Homework"
+    },
+    {
+      "path": "curriculum/week-22-chaos-engineering-and-the-gameday/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `marketplace-gameday`: A Full Gameday Harness, Run for Real"
+    },
+    {
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/00-overview.md",
       "title": "Week 23 \u2014 Contract Testing, Property-Based Testing, and Capacity Planning"
     },
     {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/challenges/README.md",
-      "title": "Week 23 \u2014 Challenges"
-    },
-    {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/challenges/challenge-01-the-contract-that-passed-but-prod-broke.md",
-      "title": "Challenge 1 \u2014 The Contract That Passed But Prod Broke"
-    },
-    {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/exercises/README.md",
-      "title": "Week 23 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/exercises/exercise-01-pact-consumer-and-provider.md",
-      "title": "Exercise 1 \u2014 Pact Consumer and Provider Verification (Across the Polyglot)"
-    },
-    {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/homework.md",
-      "title": "Week 23 Homework"
-    },
-    {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/lecture-notes/01-contract-testing-with-pact.md",
-      "title": "Lecture 1 \u2014 Contract Testing with Pact: Closing the Polyglot Gap"
-    },
-    {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/lecture-notes/02-property-based-testing-and-capacity-planning.md",
-      "title": "Lecture 2 \u2014 Property-Based Testing and Capacity Planning"
-    },
-    {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/mini-project/README.md",
-      "title": "Mini-Project \u2014 `marketplace-contracts`: A Published Broker, Property-Tested Merge, and a Capacity Model"
-    },
-    {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/quiz.md",
-      "title": "Week 23 \u2014 Quiz"
-    },
-    {
-      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/resources.md",
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/01-resources.md",
       "title": "Week 23 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/README.md",
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/02-lecture-notes/01-contract-testing-with-pact.md",
+      "title": "Lecture 1 \u2014 Contract Testing with Pact: Closing the Polyglot Gap"
+    },
+    {
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/02-lecture-notes/02-property-based-testing-and-capacity-planning.md",
+      "title": "Lecture 2 \u2014 Property-Based Testing and Capacity Planning"
+    },
+    {
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/03-exercises/00-overview.md",
+      "title": "Week 23 \u2014 Exercises"
+    },
+    {
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/03-exercises/exercise-01-pact-consumer-and-provider.md",
+      "title": "Exercise 1 \u2014 Pact Consumer and Provider Verification (Across the Polyglot)"
+    },
+    {
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/04-challenges/00-overview.md",
+      "title": "Week 23 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/04-challenges/challenge-01-the-contract-that-passed-but-prod-broke.md",
+      "title": "Challenge 1 \u2014 The Contract That Passed But Prod Broke"
+    },
+    {
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/05-quiz.md",
+      "title": "Week 23 \u2014 Quiz"
+    },
+    {
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/06-homework.md",
+      "title": "Week 23 Homework"
+    },
+    {
+      "path": "curriculum/week-23-contract-testing-property-based-testing-capacity-planning/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 `marketplace-contracts`: A Published Broker, Property-Tested Merge, and a Capacity Model"
+    },
+    {
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/00-overview.md",
       "title": "Week 24 \u2014 Capstone Integration, Architecture Review, and Demo"
     },
     {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/challenges/README.md",
-      "title": "Week 24 \u2014 Challenges"
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/01-resources.md",
+      "title": "Week 24 \u2014 Resources"
     },
     {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/challenges/challenge-01-deliver-the-capstone-defense-live.md",
-      "title": "Challenge 1 \u2014 Deliver the Capstone Defense Live"
-    },
-    {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/exercises/README.md",
-      "title": "Week 24 \u2014 Exercises"
-    },
-    {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/exercises/exercise-01-trace-one-order-end-to-end.md",
-      "title": "Exercise 1 \u2014 Trace One Order End to End"
-    },
-    {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/homework.md",
-      "title": "Week 24 Homework \u2014 The Capstone Deliverables"
-    },
-    {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/lecture-notes/01-defending-an-architecture-the-staff-review.md",
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/02-lecture-notes/01-defending-an-architecture-the-staff-review.md",
       "title": "Lecture 1 \u2014 Defending an Architecture: The Staff-Engineer Review"
     },
     {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/lecture-notes/02-the-two-chaos-drills-and-the-demo.md",
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/02-lecture-notes/02-the-two-chaos-drills-and-the-demo.md",
       "title": "Lecture 2 \u2014 The Two Chaos Drills and the 12-Minute Demo"
     },
     {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/mini-project/README.md",
-      "title": "Mini-Project \u2014 The Capstone: The Polyglot Marketplace Backbone, Assembled and Defended"
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/03-exercises/00-overview.md",
+      "title": "Week 24 \u2014 Exercises"
     },
     {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/quiz.md",
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/03-exercises/exercise-01-trace-one-order-end-to-end.md",
+      "title": "Exercise 1 \u2014 Trace One Order End to End"
+    },
+    {
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/04-challenges/00-overview.md",
+      "title": "Week 24 \u2014 Challenges"
+    },
+    {
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/04-challenges/challenge-01-deliver-the-capstone-defense-live.md",
+      "title": "Challenge 1 \u2014 Deliver the Capstone Defense Live"
+    },
+    {
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/05-quiz.md",
       "title": "Week 24 \u2014 Quiz"
     },
     {
-      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/resources.md",
-      "title": "Week 24 \u2014 Resources"
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/06-homework.md",
+      "title": "Week 24 Homework \u2014 The Capstone Deliverables"
+    },
+    {
+      "path": "curriculum/week-24-capstone-integration-architecture-review-demo/07-mini-project/00-overview.md",
+      "title": "Mini-Project \u2014 The Capstone: The Polyglot Marketplace Backbone, Assembled and Defended"
+    },
+    {
+      "path": "projects/capstone/00-overview.md",
+      "title": "Capstone Project \u2014 Master Guide"
+    },
+    {
+      "path": "resources/setup-guides/00-overview.md",
+      "title": "Setup Guides"
+    },
+    {
+      "path": "resources/setup-guides/browser.md",
+      "title": "Browser-Based Setup (No Install)"
+    },
+    {
+      "path": "resources/setup-guides/linux.md",
+      "title": "Linux Setup Guide"
+    },
+    {
+      "path": "resources/setup-guides/macos.md",
+      "title": "macOS Setup Guide"
+    },
+    {
+      "path": "resources/setup-guides/windows.md",
+      "title": "Windows Setup Guide"
     }
   ]
 }
