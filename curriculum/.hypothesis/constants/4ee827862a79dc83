@@ -1,4 +1,0 @@
-# file: /Volumes/Extreme Pro/GIT-DEV/CodeCrunchWebsite2026/CODE-CRUNCH-WORLDWIDE/C22-CRUNCH-MESH/curriculum/week-23-contract-testing-property-based-testing-capacity-planning/exercises/exercise-02-property-tests-crdt-merge.py
-# hypothesis_version: 6.141.1
-
-[200, 300, '-q -s', 'BuggyORSet', 'CorrectORSet', '__main__', 'x', 'y', 'z']
