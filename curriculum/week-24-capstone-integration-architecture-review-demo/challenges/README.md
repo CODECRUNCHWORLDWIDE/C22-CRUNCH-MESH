@@ -1,0 +1,9 @@
+# Week 24 — Challenges
+
+The exercises produce the artifacts. **The challenge is the moment they're all on the table and you defend them live.** Friday's capstone defense — the cohort and two external reviewers — is not a presentation you read; it's an hour where people whose job is to find the failure mode in your design try to find it, and you answer in real time. Everything you built in twenty-four weeks comes down to whether you can stand in the room, trace one order on the live system, name your own biggest risk before they do, and survive the question bank without flinching.
+
+## Index
+
+1. **[Challenge 1 — Deliver the capstone defense live](challenge-01-deliver-the-capstone-defense-live.md)** — run the full architecture review end to end in front of the cohort and two external reviewers: the context, the C4 container walk, the live trace-an-order, the two chaos drills, the consistency model, the cost, and the risk list. You must (a) bring the running two-region system up healthy at defense time, (b) trace one order live with a trace-to-log jump, (c) answer the staff-engineer question bank, and (d) walk out with a risk list you turn into your README's known-limitations section. (~the full Friday slot)
+
+This challenge is the course. Every prior week was building the system and the literacy; this is the hour where you demonstrate both at once. The difference between an engineer who *built* a distributed system and one who can *own* it is whether they can stand in front of skeptical reviewers, walk a real request through a live system, distinguish the failure domains, defend the consistency choices per data type, and name the risks they already know about — calmly, with measured numbers, while running the room. That hour is the staff-engineer bar, rehearsed for real. Clear it and you have done what C22 set out to make you able to do: lead a backend platform team and defend an architecture under cross-examination.
