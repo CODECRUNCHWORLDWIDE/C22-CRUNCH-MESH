@@ -1,5 +1,7 @@
 # C22 · Crunch Mesh — Microservices & Distributed Systems
 
+> A 24-week Crunch Labs course in microservices and distributed systems — service mesh, event streaming, multi-region data, observability, and chaos engineering, taught entirely on open-source infrastructure.
+
 Crunch Mesh is the Code Crunch Labs tier course for engineers who have shipped backend systems and now need to design the platforms those systems live on. Twenty-four weeks of distributed-systems theory, polyglot service design, service mesh, event streaming, multi-region data, observability, and chaos engineering, taught entirely on open-source infrastructure. You graduate able to lead a backend platform team, defend an architecture under cross-examination, and pass a staff-engineer system-design loop on technique rather than buzzwords.
 
 The Mesh sub-brand is lagoon-blue (`#0EA5E9`). The editorial voice is restrained and technical. The bias is open-source-first: Kubernetes, Istio, Linkerd, Envoy, Postgres, Debezium, Kafka, Redpanda, NATS, Temporal, gRPC, OpenTelemetry, Prometheus, Thanos, Grafana, Tempo, Loki, Trino, Iceberg, OPA, SPIFFE/SPIRE.
